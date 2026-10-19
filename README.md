@@ -4,6 +4,10 @@ A CS 5130 research project on AI planning reliability under dependent constraint
 
 **Status:** Proposal and team discussion. Implementation has not started. The team will choose the implementation language, models, frameworks, APIs, and supporting tools together.
 
+## Project proposal
+
+[Download the CS 5130 project proposal](CS%205130%20Project%20Proposal.docx).
+
 ## Research question
 
 **How does misinformation affect itinerary validity as planning horizon increases, and can targeted verification and explicit recovery reduce cascading failures?**
