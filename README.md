@@ -8,6 +8,14 @@ A CS 5130 research project on AI planning reliability under dependent constraint
 
 [Download the CS 5130 project proposal](CS%205130%20Project%20Proposal.docx).
 
+## Presentation and speaker script
+
+The proposal presentation contains 10 slides with a 10-minute timing plan. The PowerPoint includes the spoken script and delivery cues in its speaker notes.
+
+- [PowerPoint with speaker notes](presentation/long-horizon-trip-planning-proposal-with-script.pptx)
+- [Speaker script (PDF)](presentation/speaker-script.pdf)
+- [Speaker script (Markdown)](presentation/speaker-script.md)
+
 ## Research question
 
 **How does misinformation affect itinerary validity as planning horizon increases, and can targeted verification and explicit recovery reduce cascading failures?**
