@@ -98,4 +98,6 @@ Constraint density and budget and scheduling slack will be kept approximately co
 
 The team will discuss the language, model/provider, agent framework or custom implementation, storage format, testing tools, and experiment tooling before implementation. No installation or execution instructions are available yet.
 
+A proposed build and tuning plan, for the team to review, is in [docs/PLAN.md](docs/PLAN.md).
+
 All environment information is synthetic and intended for controlled experiments rather than current travel advice.
