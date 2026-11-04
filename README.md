@@ -10,11 +10,13 @@ A CS 5130 research project on AI planning reliability under dependent constraint
 
 ## Presentation and speaker script
 
-The proposal presentation contains 10 slides with a 10-minute timing plan. The PowerPoint includes the spoken script and delivery cues in its speaker notes.
+The current project update contains **3 slides for a 5-minute slot**. The script targets 4 minutes 40 seconds, leaving a 20-second buffer. The PowerPoint includes the spoken script, timing, and delivery cues in its speaker notes.
 
-- [PowerPoint with speaker notes](presentation/long-horizon-trip-planning-proposal-with-script.pptx)
-- [Speaker script (PDF)](presentation/speaker-script.pdf)
-- [Speaker script (Markdown)](presentation/speaker-script.md)
+- [Three-slide update (PowerPoint)](presentation/long-horizon-trip-planning-5-minute-update.pptx)
+- [Five-minute speaker script (PDF)](presentation/speaker-script-5-minute.pdf)
+- [Five-minute speaker script (Markdown)](presentation/speaker-script-5-minute.md)
+
+The earlier [10-minute proposal presentation](presentation/long-horizon-trip-planning-proposal-with-script.pptx) and its [PDF script](presentation/speaker-script.pdf) remain available.
 
 ## Research question
 
