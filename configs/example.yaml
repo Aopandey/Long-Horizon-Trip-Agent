@@ -1,0 +1,16 @@
+# Smoke-scale experiment on the tiny example dataset (format demo, not experiment data).
+# Generate the data first: trip-agent example-data examples/tiny
+name: example-smoke
+split: dev
+data_dir: examples/tiny
+variants: [standard, verification, recovery]
+conditions: [clean, corrupted]
+repeats: 1
+llm:
+  model: qwen3.5:9b
+  temperature: 0.6
+  num_ctx: 32768
+  think: false
+storage:
+  backend: local
+  root: runs_local

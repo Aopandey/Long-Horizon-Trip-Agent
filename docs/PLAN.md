@@ -1,10 +1,8 @@
 # Implementation and tuning plan
 
-**Status:** Proposed for team review. Nothing here is final until the team agrees on it. Open items are listed at the end.
+**Status:** The core implementation is built (see the README for setup). The synthetic dataset is supplied by the team in the format in [DATA_FORMAT.md](DATA_FORMAT.md). Open items are listed at the end.
 
 ## Context
-
-This plan turns the [project proposal](../README.md) into a buildable system. The repo currently holds only documents, so the plan covers the code layout, how the three agent variants differ, how we tune the agent, and how we run the experiments on the school server.
 
 Research question: how does misinformation in tool responses affect itinerary validity as the planning horizon grows, and do targeted verification and dependency-aware recovery reduce cascading failures?
 
@@ -16,108 +14,94 @@ Fixed by the proposal:
 - 3 repeats. 40 x 2 x 3 x 3 = 720 runs.
 - Hard separation: a trusted store, a corruption layer in front of search tools, a deterministic checker that sees only the agent's observed or verified facts, and an independent evaluator that uses the truth.
 
-Proposed decisions (the proposal leaves these open):
-- **"Training" means tuning without weight updates.** We use a pretrained LLM. Prompts, the verification policy and the recovery logic are tuned on separate dev scenarios only.
-- **Hosted model API: Claude Haiku 5.5 (`claude-haiku-5-5`) or Gemini.** The team is choosing between the two. We pick one on the dev set, freeze it, and use that single model for all three variants and all 720 runs, as the proposal requires. No open-weight model and no GPU inference. The school server runs the experiment batch (see Server workflow).
-- **Python with a custom agent loop**, no heavy agent framework.
+Decisions:
+- **Model: Qwen3.5 9B (`qwen3.5:9b`) served by Ollama**, on a laptop or the school server. One model for all three variants and all 720 runs.
+- **"Training" means tuning without weight updates.** Prompts, the verification policy, the recovery logic, the tool budget and the sampling settings are tuned on dev scenarios only.
+- **Storage: Supabase (Postgres)** for the dataset, experiments, runs, event logs and scores. A local JSON backend does the same for offline work and tests.
+- **Python with a custom agent loop**, no agent framework.
+- **Synthetic data comes from the team**, validated by `trip-agent validate` before use.
 
 ## Architecture
 
-A custom loop over each provider's native tool calling keeps budgets, logging and the three variants fully under our control. The variants differ only by policy and state, never by model or tools.
-
 ```
 trip_agent/
-  env/        models.py (pydantic), catalog.py, generator.py (seeded Boston catalog),
-              travel.py (travel-time matrix), scenario.py (scenario + hidden reference itinerary)
-  corruption/ corrupt.py (seeded, per-scenario, variant-independent)
-  tools/      search_*, get_travel_time, verify_fact, add/revise/remove_item, check_itinerary, budget.py
-  checker/    consistency.py (FactView interface: BeliefView vs TruthView)
-  agent/      llm/{base,anthropic_client,gemini_client}.py, loop.py, state.py (facts, commitments, dependency graph, checkpoints),
-              variants/{standard,verification,recovery}.py, prompts/
-  eval/       evaluator.py, metrics.py, logschema.py, stats.py (paired bootstrap CIs)
-  runner/     run_experiment.py, configs/*.yaml, launch scripts
-data/dev/  data/eval/   frozen JSON scenarios (committed, with content hash)
-tests/      docs/PLAN.md
+  env/         models.py (pydantic data model), facts.py (fact keys), loader.py (load + validate), example.py
+  corruption/  corrupt.py: seeded, exact-rate, per-scenario misinformation
+  checker/     consistency.py: one checker, BeliefView (agent) and TruthView (evaluator)
+  tools/       environment.py: 10 tools, shared tool-call budget, corruption applied to search results
+  state.py     observed/verified facts, itinerary, commitment history, checkpoints, dependency graph
+  agent/       llm/ (ollama.py, scripted.py), prompts.py, policies.py (3 variants), loop.py (episode)
+  eval/        records.py, evaluator.py (independent scoring), stats.py (bootstrap, McNemar)
+  storage/     local.py, supabase_store.py (schema in supabase/migrations/)
+  runner/      experiment.py: grid, paired seeds, resumable runs, concurrency
+  cli.py       trip-agent validate | import-data | check-llm | smoke | run | evaluate | report
+configs/       example.yaml, dev.yaml, eval.yaml
 ```
 
 Design rules:
-1. **One checker, two views.** `consistency.py` takes a `FactView`. The agent's `check_itinerary` tool passes a `BeliefView` (observed or verified facts only). The evaluator passes a `TruthView`. Same logic, no divergence, and the truth never leaks into planning.
-2. **Truth isolation.** Only `verify_fact` and the evaluator may import the trusted store. An import-boundary test makes sure the agent package cannot touch it.
-3. **Reproducible corruption.** A fact is corrupted iff `hash(scenario_id, fact_key, seed) < 0.20` among eligible fact types. It uses the same perturbation every time (for example close time +2h, price x0.7, travel time /3), so every variant sees identical lies and a fact never changes mid-run.
-4. **Feasible by construction.** Build the hidden reference itinerary first, then derive the constraints from it: budget = reference cost + a fixed slack %, required activities from the reference, a fixed number of schedule-slack minutes per day. This keeps constraint density and slack roughly constant across horizons. Horizon H is the number of required commitments linked by time, location or remaining budget. Day count scales with H.
-5. **Verification shares the budget.** `ToolBudget` counts every call (search, verify, edit). The total limit scales with horizon and is calibrated on dev.
-6. **Recovery is scaffold-managed, not left to the LLM.** In the recovery variant, `add_item` requires a `based_on` list of fact ids. `state.py` builds the fact-to-commitment dependency graph and saves a checkpoint before each commitment. When `verify_fact` or the checker exposes a mismatch, the scaffold invalidates the dependents, rolls back to the checkpoint, and re-prompts only for the affected span. At most 3 repair attempts per conflict, capped by the total budget. Rollback is state-level only: the message history stays append-only (rule 10).
-7. **Variants.**
-   - Standard: tools plus a plain system prompt.
-   - Verification: same, plus a verification policy with ranked fact priority (hotel cost, required activities, tight-slack travel and hours) and ordinary retry or replan on conflict.
-   - Recovery: verification policy plus the dependency graph, checkpoints and targeted repair.
-8. **Logging.** Every run writes JSONL: each tool call, a corrupted-or-not flag stored out-of-band for the evaluator only, commitment order, tokens, latency. The metrics need this: first-error position, propagation, reliance on false information, recovery success.
-9. **LLM client.** One `LLMClient` interface (messages and tool schemas in; text, tool calls, token usage and stop reason out) with a native adapter per provider, each using that provider's official SDK. No OpenAI-compatibility shim. Provider quirks stay inside the adapters. The Claude Haiku 5.5 adapter must:
-   - omit `temperature`, `top_p` and `top_k` (non-default values return a 400);
-   - set `output_config.effort` explicitly (the default is `medium`);
-   - read response blocks by `type`, and pass `thinking` blocks back unmodified with tool results;
-   - leave room in `max_tokens`, because thinking counts toward it;
-   - use `tool_choice: auto` (a forced tool call skips thinking);
-   - treat `stop_reason: "refusal"` as a failed step and log it (there is no server-side fallback).
-10. **Append-only history.** On Haiku 5.5 a thinking block is only valid while everything before it is unchanged, and editing earlier turns, `system` or `tools` and then replaying thinking blocks returns a 400 on accounts created on or after 2026-08-31. So in every variant the history is never edited or truncated, and `system` and the tool list stay fixed within a run. Recovery appends a message naming the corrected fact and the invalidated commitments instead of rewriting the past. Using the same mechanism in all three variants also keeps the comparison fair.
+1. **One checker, two views.** The agent's `check_itinerary` tool checks with a `BeliefView` (only facts it observed or verified). The evaluator checks with a `TruthView`. Same code, so the two can never disagree about a constraint, and the belief view never reveals a hidden value.
+2. **Truth isolation.** Only `verify_fact` and the evaluator read correct values. A test makes sure the agent package does not import storage or the evaluator.
+3. **Reproducible corruption.** Exactly round(rate x N) eligible facts are altered, chosen by a stable hash of (scenario, seed, fact key). Each is perturbed the same way every time, in the "optimistic" direction of the proposal's examples: later closing, lower prices, shorter travel. Every variant sees identical lies, and a fact never changes mid-run.
+4. **Feasible by construction.** Each scenario ships a hidden reference itinerary. `trip-agent validate` checks that it satisfies every constraint under the true facts.
+5. **Verification shares the budget.** Every tool call counts, including `verify_fact` and `check_itinerary`. The limit is `base + per_commitment x horizon` (default 20 + 5H), tuned on dev.
+6. **Dependencies are computed by the scaffold, not the model.** An item depends on its own hours and price and on the travel legs to its neighbors on that day. The hotel price belongs to the hotel choice. A 9B model cannot be trusted to list its own dependencies.
+7. **Variants differ only in the system prompt and in what the scaffold adds after a tool call.**
+   - Standard: base prompt, nothing added.
+   - Verification: adds a verification policy and flags unverified facts that a new commitment relies on with little slack.
+   - Recovery: the same, plus targeted repair. When a corrected fact or a failed check breaks items, it checkpoints, removes only the broken items, names the later same-day items that depend on them, and caps repairs at 3 per conflict. At the end it submits the best checked checkpoint if planning ended in a worse state.
+8. **Append-only history.** Nothing already sent to the model is edited. Repairs change the scaffold state and are reported in the tool result. All three variants use the same mechanism.
+9. **Equal help for everyone.** Search matching by word, hints on empty results, and notices on repeated identical lookups live in the tool layer, so every variant gets them.
+10. **Everything is logged.** Each run stores every LLM turn (tokens, latency, thinking text), every tool call and result, the commitment history with the facts each commitment relied on, and the corruption plan.
 
-## Metrics and statistics
+## Metrics
 
-Fully valid itinerary rate; % constraints satisfied; reliance on false information; first-error position and propagation; recovery success rate; verification calls, total calls, latency, token cost. Paired comparisons by scenario, bootstrap confidence intervals, McNemar on validity.
+Computed by `eval/evaluator.py` after a run, from the stored record:
+- **valid**: every constraint passes under the true facts.
+- **fraction_satisfied**: share of constraint checks that pass.
+- **false_reliance_items**: final items that rely on a corrupted fact the agent saw but never verified.
+- **first_error_position**: index of the first commitment that relied on false information or broke a true constraint.
+- **errors_after_first**: later commitments that were also errors (propagation).
+- **conflicts_detected / resolved, recovery_success_rate**: corrupted facts the agent verified, and how many no longer cause a violation at the end.
+- Cost: tool calls, verify calls, turns, prompt and completion tokens, latency.
+
+`trip-agent report` writes per-run and summary CSVs. Each variant is compared with the standard agent on paired runs (same scenario, condition and repeat), with a bootstrap CI and an exact McNemar test on validity.
 
 ## Tuning protocol
 
-1. Generate **dev scenarios** (about 40, same four horizons, separate seeds) and the **eval scenarios** (40). Hash and freeze both. Never read the eval set during tuning.
-2. On dev only, tune: system prompts, verification priority weights, tool-call budget per horizon, repair limit, and the model's effort level. This is also where we choose between Haiku and Gemini (see Model choice and API notes). Temperature is not a tuning knob: Haiku 5.5 rejects it, so run-to-run variation is measured with the 3 repeats instead. Log each config and result in `runs/dev/` so choices are traceable.
-3. Sanity targets on dev before freezing: the clean-condition standard agent solves most H=5 scenarios (the pipeline works); the corrupted condition measurably hurts the standard agent at larger H (the effect exists to study); the recovery logic does not loop.
-4. Freeze: tag `eval-freeze` with config, prompts, model name and scenario hash. Then run the 720 evaluation runs once. Report anything that changes afterward as a deviation.
+1. Get the dataset: a **dev** split (about 40 scenarios, the same four horizons) and the **eval** split (40). Validate both, import them, and record the dataset hash.
+2. On dev only (`configs/dev.yaml`), tune: system prompts, verification slack thresholds, the repair limit, the tool budget, temperature, `num_ctx`, and whether thinking is on. Give each attempt its own experiment name so results stay traceable.
+3. Sanity targets on dev before freezing: the clean-condition standard agent solves most H=5 scenarios; the corrupted condition measurably hurts the standard agent at larger H; the recovery logic does not loop.
+4. Freeze: copy the chosen settings into `configs/eval.yaml`, commit, and tag `eval-freeze`. Run `trip-agent run configs/eval.yaml --allow-eval` once. Report anything that changes afterward as a deviation.
 
-## Model choice and API notes
+## Model notes (Qwen3.5 9B on Ollama)
 
-Candidates: Claude Haiku 5.5 (`claude-haiku-5-5`) and Gemini. One of them is used for everything, so the choice is made once, on dev data, before the freeze.
-
-Selection criteria, measured on dev scenarios with identical prompts and tools: tool-call reliability (valid calls, few malformed or looping turns), fully valid itinerary rate in the clean condition at H=5 and H=10, cost per run, latency, and rate-limit headroom at the concurrency we need. Pick the cheapest model that clears the clean-condition sanity bar; the experiment needs a model that can do the task when information is correct, so that the effect of misinformation is what we measure.
-
-Claude Haiku 5.5 notes:
-- Price at the time of writing: $0.10 per million input tokens and $0.50 per million output tokens for prompts up to 100K tokens, and $0.50 / $2.50 above that. Cache reads cost 0.1x the input rate. Confirm current prices before budgeting.
-- The whole history is resent on every tool call, so cost grows with horizon. Long runs at H=30 may cross 100K tokens and switch rate cards. Use prompt caching on the fixed prefix (system prompt, tool schemas, catalog-independent instructions) and keep that prefix byte-stable.
-- Estimate total cost as (input tokens + output tokens per run, from dev) x 720, per rate card. Measure it on dev before the freeze, then give the runner a hard spend cap so a loop cannot burn the budget.
-- Adapter requirements are listed in design rules 9 and 10.
-
-Gemini notes: written when needed, against Google's official SDK and docs. Confirm the exact model ID, tool-calling format and any sampling-parameter limits from Google's documentation first. The `LLMClient` interface keeps this isolated to one adapter file.
-
-Secrets: API keys live in environment variables or a git-ignored `.env`. Commit a `.env.example` with placeholder names only. Never put a key in a config file, log, or commit.
+- `qwen3.5:9b` is about 6.5 GB (Q4). Pull it once with `ollama pull qwen3.5:9b`; `trip-agent check-llm` confirms it is available and supports tools.
+- **Context:** Ollama's default context window is small. The config sets `num_ctx: 32768`. Long horizons resend a growing history every turn, so watch for `context_near_limit` events and raise `num_ctx` if they appear.
+- **Thinking:** off by default for speed. Try `think: true` on dev; it may improve planning at a large time cost.
+- **Sampling:** temperature and per-run seeds are passed to Ollama. The seed depends on (scenario, condition, repeat) but not the variant, so variants are paired.
+- **Throughput:** runs go through one Ollama server. To run several at once, set `OLLAMA_NUM_PARALLEL` on the server and raise `concurrency` in the config.
+- **First live check:** with the tiny example and `qwen3:8b` standing in, the pipeline ran end to end: tool calls parsed, repairs fired, scores computed. The first two runs showed a small model wasting its budget on exact-match searches and repeated lookups, which led to rule 9.
 
 ## Server workflow
 
-The model runs in the provider's cloud, so the school server is a place to run the long experiment batch reliably, not to host a model.
-
-1. The server pulls the repo, builds a venv, and loads API keys from its environment. It needs outbound HTTPS to the chosen provider.
-2. `runner/run_experiment.py` reads a YAML config (variants, conditions, scenarios, repeats, seeds, concurrency, spend cap) and runs many agents concurrently, with retry and backoff on rate-limit and server errors. Runs are resumable: each (scenario, condition, variant, repeat) writes its own log and is skipped when done. This also lets teammates split the 720 runs by scenario shard if the server is unavailable.
-3. Results sync back as small JSONL and CSV into `runs/` (large files git-ignored, summary tables committed).
+1. On the school server: install Ollama, `ollama pull qwen3.5:9b`, clone the repo, create the venv, and copy `.env` with `OLLAMA_HOST` and the Supabase keys.
+2. Run inside `tmux` or a batch job: `trip-agent run configs/dev.yaml`. Runs are resumable, so an interrupted batch continues where it stopped. Errored runs are retried on the next start.
+3. Results land in Supabase, so anyone on the team can look at them while the batch runs (`run_results` view), and `trip-agent report` works from any machine with the keys.
 
 ## Phases
 
-0. **Setup.** Repo scaffold, `pyproject.toml`, lint, pytest, docs. Create API keys, confirm who pays and what rate limits apply, and confirm server access.
-1. **Environment.** Models, catalog generator, travel matrix. Tests for data validity.
-2. **Scenarios.** Reference itinerary builder, constraint derivation, horizon scaling. Dev and eval sets generated and frozen. Tests that every scenario is feasible.
-3. **Tools, corruption, checker.** Search tools, verify tool, budget, corruption layer, `FactView` checker. Tests: determinism, 20% rate, identical across variants, truth isolation.
-4. **Agent.** LLM client, loop, standard variant. Smoke run on H=5 clean.
-5. **Variants.** Verification policy, then dependency graph, checkpoints and repair. Unit tests for invalidation and the 3-attempt cap.
-6. **Evaluator, metrics, stats.** Independent scorer, JSONL schema, bootstrap CIs. Validate against hand-built itineraries.
-7. **Dev tuning** (choose Haiku or Gemini, tune effort and prompts), then **freeze** and the 720-run evaluation on the server.
-8. **Analysis and report.** Tables, plots by horizon and condition, error-propagation case studies.
-
-Suggested work tracks (the team assigns owners):
-- A: environment and scenarios.
-- B: tools, corruption and checker.
-- C: LLM client, agent and variants.
-- D: evaluator, metrics, runner and server.
+0. **Setup (done).** Package, CLI, lint, tests, configs, Supabase schema.
+1. **Core system (done).** Data model, corruption, checker, tools, agent loop, three variants, evaluator, stats, storage, runner.
+2. **Dataset (next, from the team).** Build dev and eval scenarios in the documented format; `validate` must pass.
+3. **Supabase.** Create the project, apply the migration, `import-data`.
+4. **Model.** Pull `qwen3.5:9b` where it will run; run `check-llm` and `smoke`.
+5. **Dev tuning.** Iterate on `configs/dev.yaml` until the sanity targets hold.
+6. **Freeze and evaluate.** Tag, run the 720 eval runs once.
+7. **Analysis and report.** Tables and plots by horizon and condition; error-propagation case studies from the event logs.
 
 ## Open items
 
-- Ask the school or TA: does the server allow outbound HTTPS to the model provider, job scheduler (Slurm?) and time limits, storage quota, Python version, and whether sessions persist for long batches.
-- API access: who creates and pays for the keys, whether the school provides credits, and the rate-limit tier for the chosen provider.
-- Haiku vs Gemini is undecided; it is settled on dev data before the freeze.
-- Whether our Anthropic accounts were created on or after 2026-08-31 (affects how strictly the append-only history is enforced; we follow it either way).
+- School server: GPU and memory (a 9B Q4 model needs about 8 GB of VRAM), whether Ollama can be installed, scheduler and time limits, outbound access to Supabase.
+- Supabase project: who owns it, and who gets the secret key.
+- Metric definitions in `eval/evaluator.py` are provisional; the team should confirm them before the freeze.
 - The proposal gives no deadline, so the phases have no dates yet.

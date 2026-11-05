@@ -1,0 +1,396 @@
+{
+  "version": "1",
+  "city": "Boston",
+  "synthetic": true,
+  "attractions": [
+    {
+      "id": "a_art_museum",
+      "name": "Fenway Art Museum",
+      "neighborhood": "Back Bay",
+      "tags": [
+        "art",
+        "museum"
+      ],
+      "lat": null,
+      "lon": null,
+      "kind": "attraction",
+      "hours": {
+        "open": "10:00",
+        "close": "17:00",
+        "closed_weekdays": [
+          1
+        ]
+      },
+      "visit_minutes": 120,
+      "price_per_person": 25.0
+    },
+    {
+      "id": "a_aquarium",
+      "name": "Harbor Aquarium",
+      "neighborhood": "Downtown",
+      "tags": [
+        "family"
+      ],
+      "lat": null,
+      "lon": null,
+      "kind": "attraction",
+      "hours": {
+        "open": "09:00",
+        "close": "17:00",
+        "closed_weekdays": []
+      },
+      "visit_minutes": 90,
+      "price_per_person": 30.0
+    },
+    {
+      "id": "a_liberty_walk",
+      "name": "Liberty Trail Walk",
+      "neighborhood": "Downtown",
+      "tags": [
+        "history",
+        "outdoor"
+      ],
+      "lat": null,
+      "lon": null,
+      "kind": "attraction",
+      "hours": {
+        "open": "08:00",
+        "close": "20:00",
+        "closed_weekdays": []
+      },
+      "visit_minutes": 90,
+      "price_per_person": 0.0
+    },
+    {
+      "id": "a_science",
+      "name": "Riverside Science Center",
+      "neighborhood": "Cambridge",
+      "tags": [
+        "science",
+        "museum"
+      ],
+      "lat": null,
+      "lon": null,
+      "kind": "attraction",
+      "hours": {
+        "open": "09:00",
+        "close": "17:00",
+        "closed_weekdays": []
+      },
+      "visit_minutes": 120,
+      "price_per_person": 28.0
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "r_hanover",
+      "name": "Hanover Trattoria",
+      "neighborhood": "North End",
+      "tags": [
+        "italian"
+      ],
+      "lat": null,
+      "lon": null,
+      "kind": "restaurant",
+      "hours": {
+        "open": "11:00",
+        "close": "22:00",
+        "closed_weekdays": []
+      },
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "meal_minutes": 60,
+      "price_per_person": 35.0
+    },
+    {
+      "id": "r_pier",
+      "name": "Pier Chowder House",
+      "neighborhood": "Seaport",
+      "tags": [
+        "seafood"
+      ],
+      "lat": null,
+      "lon": null,
+      "kind": "restaurant",
+      "hours": {
+        "open": "11:30",
+        "close": "21:00",
+        "closed_weekdays": []
+      },
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "meal_minutes": 60,
+      "price_per_person": 30.0
+    },
+    {
+      "id": "r_boylston",
+      "name": "Boylston Bistro",
+      "neighborhood": "Back Bay",
+      "tags": [
+        "cafe"
+      ],
+      "lat": null,
+      "lon": null,
+      "kind": "restaurant",
+      "hours": {
+        "open": "07:00",
+        "close": "15:00",
+        "closed_weekdays": []
+      },
+      "meals": [
+        "breakfast",
+        "lunch"
+      ],
+      "meal_minutes": 45,
+      "price_per_person": 20.0
+    }
+  ],
+  "hotels": [
+    {
+      "id": "h_copley",
+      "name": "Copley Row Hotel",
+      "neighborhood": "Back Bay",
+      "tags": [],
+      "lat": null,
+      "lon": null,
+      "kind": "hotel",
+      "price_per_night": 220.0,
+      "max_guests_per_room": 2
+    },
+    {
+      "id": "h_harbor",
+      "name": "Seaport Harbor Inn",
+      "neighborhood": "Seaport",
+      "tags": [],
+      "lat": null,
+      "lon": null,
+      "kind": "hotel",
+      "price_per_night": 260.0,
+      "max_guests_per_room": 2
+    }
+  ],
+  "travel": [
+    {
+      "from_id": "a_art_museum",
+      "to_id": "a_aquarium",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_art_museum",
+      "to_id": "a_liberty_walk",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_art_museum",
+      "to_id": "a_science",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_art_museum",
+      "to_id": "r_hanover",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_art_museum",
+      "to_id": "r_pier",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_art_museum",
+      "to_id": "r_boylston",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_art_museum",
+      "to_id": "h_copley",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_art_museum",
+      "to_id": "h_harbor",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_aquarium",
+      "to_id": "a_liberty_walk",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_aquarium",
+      "to_id": "a_science",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_aquarium",
+      "to_id": "r_hanover",
+      "minutes": 10,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_aquarium",
+      "to_id": "r_pier",
+      "minutes": 10,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_aquarium",
+      "to_id": "r_boylston",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_aquarium",
+      "to_id": "h_copley",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_aquarium",
+      "to_id": "h_harbor",
+      "minutes": 10,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_liberty_walk",
+      "to_id": "a_science",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_liberty_walk",
+      "to_id": "r_hanover",
+      "minutes": 10,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_liberty_walk",
+      "to_id": "r_pier",
+      "minutes": 10,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_liberty_walk",
+      "to_id": "r_boylston",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_liberty_walk",
+      "to_id": "h_copley",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_liberty_walk",
+      "to_id": "h_harbor",
+      "minutes": 10,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_science",
+      "to_id": "r_hanover",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_science",
+      "to_id": "r_pier",
+      "minutes": 25,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_science",
+      "to_id": "r_boylston",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_science",
+      "to_id": "h_copley",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_science",
+      "to_id": "h_harbor",
+      "minutes": 25,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_hanover",
+      "to_id": "r_pier",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_hanover",
+      "to_id": "r_boylston",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_hanover",
+      "to_id": "h_copley",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_hanover",
+      "to_id": "h_harbor",
+      "minutes": 15,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_pier",
+      "to_id": "r_boylston",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_pier",
+      "to_id": "h_copley",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_pier",
+      "to_id": "h_harbor",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_boylston",
+      "to_id": "h_copley",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_boylston",
+      "to_id": "h_harbor",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "h_copley",
+      "to_id": "h_harbor",
+      "minutes": 20,
+      "cost_per_person": 0.0
+    }
+  ],
+  "symmetric_travel": true,
+  "same_place_minutes": 0
+}
