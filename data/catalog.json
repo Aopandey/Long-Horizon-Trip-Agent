@@ -1,0 +1,186 @@
+{
+  "version": "1",
+  "city": "Boston",
+  "synthetic": true,
+  "symmetric_travel": true,
+  "same_place_minutes": 0,
+  "attractions": [
+    {
+      "id": "a_harbor_aquarium",
+      "name": "Harborlight Aquarium",
+      "neighborhood": "Downtown",
+      "kind": "attraction",
+      "hours": {
+        "open": "09:00",
+        "close": "18:00",
+        "closed_weekdays": []
+      },
+      "visit_minutes": 120,
+      "price_per_person": 32.0
+    },
+    {
+      "id": "a_freedom_steps",
+      "name": "Freedom Steps Walking Trail",
+      "neighborhood": "Downtown",
+      "kind": "attraction",
+      "hours": {
+        "open": "08:00",
+        "close": "20:00",
+        "closed_weekdays": []
+      },
+      "visit_minutes": 90,
+      "price_per_person": 0.0
+    },
+    {
+      "id": "a_crystal_globe",
+      "name": "Crystal Globe Map Room",
+      "neighborhood": "Back Bay",
+      "kind": "attraction",
+      "hours": {
+        "open": "10:00",
+        "close": "12:30",
+        "closed_weekdays": []
+      },
+      "visit_minutes": 60,
+      "price_per_person": 9.0
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "r_quill_cafe",
+      "name": "Quill and Kettle Cafe",
+      "neighborhood": "Downtown",
+      "kind": "restaurant",
+      "hours": {
+        "open": "07:00",
+        "close": "15:00",
+        "closed_weekdays": []
+      },
+      "meals": [
+        "breakfast",
+        "lunch"
+      ],
+      "meal_minutes": 45,
+      "price_per_person": 16.0
+    },
+    {
+      "id": "r_market_chowder",
+      "name": "Marketplace Chowder Hall",
+      "neighborhood": "Downtown",
+      "kind": "restaurant",
+      "hours": {
+        "open": "11:00",
+        "close": "22:00",
+        "closed_weekdays": []
+      },
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "meal_minutes": 60,
+      "price_per_person": 34.0
+    }
+  ],
+  "hotels": [
+    {
+      "id": "h_copley_grand",
+      "name": "Copley Grand Hotel",
+      "neighborhood": "Back Bay",
+      "kind": "hotel",
+      "price_per_night": 349.0,
+      "max_guests_per_room": 2
+    }
+  ],
+  "travel": [
+    {
+      "from_id": "a_harbor_aquarium",
+      "to_id": "a_freedom_steps",
+      "minutes": 9,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_harbor_aquarium",
+      "to_id": "a_crystal_globe",
+      "minutes": 21,
+      "cost_per_person": 2.4
+    },
+    {
+      "from_id": "a_harbor_aquarium",
+      "to_id": "r_quill_cafe",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_harbor_aquarium",
+      "to_id": "r_market_chowder",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_harbor_aquarium",
+      "to_id": "h_copley_grand",
+      "minutes": 20,
+      "cost_per_person": 2.4
+    },
+    {
+      "from_id": "a_freedom_steps",
+      "to_id": "a_crystal_globe",
+      "minutes": 20,
+      "cost_per_person": 2.4
+    },
+    {
+      "from_id": "a_freedom_steps",
+      "to_id": "r_quill_cafe",
+      "minutes": 7,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_freedom_steps",
+      "to_id": "r_market_chowder",
+      "minutes": 11,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "a_freedom_steps",
+      "to_id": "h_copley_grand",
+      "minutes": 19,
+      "cost_per_person": 2.4
+    },
+    {
+      "from_id": "a_crystal_globe",
+      "to_id": "r_quill_cafe",
+      "minutes": 20,
+      "cost_per_person": 2.4
+    },
+    {
+      "from_id": "a_crystal_globe",
+      "to_id": "r_market_chowder",
+      "minutes": 21,
+      "cost_per_person": 2.4
+    },
+    {
+      "from_id": "a_crystal_globe",
+      "to_id": "h_copley_grand",
+      "minutes": 5,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_quill_cafe",
+      "to_id": "r_market_chowder",
+      "minutes": 8,
+      "cost_per_person": 0.0
+    },
+    {
+      "from_id": "r_quill_cafe",
+      "to_id": "h_copley_grand",
+      "minutes": 20,
+      "cost_per_person": 2.4
+    },
+    {
+      "from_id": "r_market_chowder",
+      "to_id": "h_copley_grand",
+      "minutes": 21,
+      "cost_per_person": 2.4
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "dev-h05-001",
+  "split": "dev",
+  "horizon": 5,
+  "description": "One day, three required attractions, lunch and dinner.",
+  "constraints": {
+    "start_date": "2026-06-01",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 600.0,
+    "required_attractions": [
+      "a_crystal_globe",
+      "a_harbor_aquarium",
+      "a_freedom_steps"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_copley_grand",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_harbor_aquarium",
+        "start": "12:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_freedom_steps",
+        "start": "14:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_market_chowder",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}
