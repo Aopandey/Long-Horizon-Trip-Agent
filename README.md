@@ -121,6 +121,8 @@ On macOS, clone the repo outside iCloud-synced folders (Desktop and Documents). 
 
 ### Try it
 
+Running the model on your own computer for dev tuning: follow [INSTRUCTIONS.md](INSTRUCTIONS.md).
+
 ```bash
 pytest -m "not ollama"                       # unit tests, no model needed
 trip-agent check-llm                         # Ollama reachable, model pulled, tools supported
