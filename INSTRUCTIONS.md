@@ -1,6 +1,6 @@
 # Running the agent on your computer
 
-These steps are for a teammate who runs the model locally for **dev tuning**. Message Youssef if anything here does not work.
+These steps are for a teammate who runs the model locally for **dev tuning**. Results go straight into the team's Supabase database, so everyone can see them. Message Youssef if anything here does not work.
 
 ## What we are doing
 
@@ -20,6 +20,7 @@ The project tunes the **agent around the model**: its prompts, verification sett
 - About 10 GB of free disk space.
 - Python 3.11 or newer, git, and [Ollama](https://ollama.com/download).
 - A folder that is **not** synced by iCloud, OneDrive or Dropbox. Synced folders can evict files and make Python hang. On a Mac, avoid Desktop and Documents; use something like `~/Projects`.
+- From Youssef, sent privately: the Supabase **project URL** and **your own secret key** (`sb_secret_...`).
 
 ## 1. Install the model
 
@@ -29,32 +30,55 @@ Install Ollama, start it, then pull the model. It is a 7.6 GB download.
 ollama pull qwen3.5:9b
 ```
 
-## 2. Get the code and the data
+## 2. Get the code
 
-Until the pull requests are merged, the `synthetic-data` branch has both the code and the 80 scenarios.
+The dataset (80 scenarios) is already in Supabase, so you only need the code.
 
 ```bash
-git clone -b synthetic-data https://github.com/Aopandey/Long-Horizon-Trip-Agent.git
+git clone -b feat/core-implementation https://github.com/Aopandey/Long-Horizon-Trip-Agent.git
 cd Long-Horizon-Trip-Agent
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
+pip install -e ".[dev,supabase]"
 ```
 
-## 3. Check that everything works
+Once the pull requests are merged, clone `main` instead.
+
+## 3. Add your keys
+
+Copy the template and open it:
+
+```bash
+cp .env.example .env
+```
+
+Fill in these two lines. No quotes, no spaces around `=`:
+
+```
+SUPABASE_URL=https://<project-ref>.supabase.co
+SUPABASE_SERVICE_KEY=sb_secret_...
+```
+
+- `.env` is ignored by git, so it is never committed. Keep it that way: never paste the key into a chat, an issue, or a commit.
+- Your key can read, change and **delete** everything in the team database. Only run the commands on this page.
+- Run every `trip-agent` command from the repo folder, because that is where `.env` is read from.
+
+## 4. Check that everything works
 
 Run these in order. Each one should end without an error.
 
 ```bash
-pytest -m "not ollama" -q          # 50 passed: the code works without the model
-trip-agent validate data           # dataset OK: 80 scenarios
-trip-agent check-llm               # OK: Ollama is running and the model supports tools
+pytest -m "not ollama" -q                 # all tests pass: the code works without the model
+trip-agent validate --backend supabase    # dataset OK, 80 scenarios, hash f3270941decf0d9a
+trip-agent check-llm                      # OK: Ollama is running and the model supports tools
 ```
 
-Then run one short live episode. It prints each tool call as it happens and a score at the end. Expect about 5 to 15 minutes.
+The hash must be exactly `f3270941decf0d9a`. If it is different, run `git pull` and try again, then tell Youssef.
+
+Then run one short live episode. It reads the scenario from Supabase, prints each tool call as it happens and a score at the end, and stores nothing. Expect about 5 to 15 minutes.
 
 ```bash
-trip-agent smoke --data-dir data --scenario dev-h05-001
+trip-agent smoke --backend supabase --scenario dev-h05-001
 ```
 
 While it runs, check in a second terminal that the model is on the GPU. The `PROCESSOR` column should say `100% GPU`.
@@ -65,15 +89,14 @@ ollama ps
 
 If `check-llm` or `smoke` fails, or `ollama ps` shows CPU, stop and send Youssef the error. This model ships in a newer weight format (NVFP4) that some GPUs may not run well.
 
-## 4. Run a small dev batch
+## 5. Run a small dev batch
 
-Create a file `configs/dev-local.yaml` with this content:
+Create a config file named after you, for example `configs/dev-alex.yaml`, with this content. Change `alex` in the file name and in `name:` to your own name:
 
 ```yaml
-# Dev tuning on one machine, results stored locally (no Supabase needed).
-name: dev-local-v1
+# Dev tuning: data from Supabase, results saved to Supabase.
+name: dev-alex-v1        # must be unique in the team database: put your name in it
 split: dev
-data_dir: data
 horizons: [5]            # start with the 1-day scenarios
 variants: [standard, verification, recovery]
 conditions: [clean, corrupted]
@@ -87,40 +110,37 @@ llm:
   think: false
 max_turns: 200
 concurrency: 1
-storage: {backend: local, root: runs_local}
+storage: {backend: supabase, dataset: main}
 ```
 
 Run the first 6 runs: scenario `dev-h05-001` in both conditions with all three variants.
 
 ```bash
-trip-agent run configs/dev-local.yaml --limit 6
+trip-agent run configs/dev-alex.yaml --limit 6
 ```
 
-Then summarize them:
+Each finished run is saved to Supabase immediately with its score. Then print the summary table:
 
 ```bash
-trip-agent report configs/dev-local.yaml
+trip-agent report configs/dev-alex.yaml
 ```
 
-The whole config is 60 runs (10 scenarios x 2 conditions x 3 variants). Runs are **resumable**: running the same command again skips finished runs, so you can stop with Ctrl+C and continue later. Leave out `--limit` to run everything that is left.
+The whole config is 60 runs (10 scenarios x 2 conditions x 3 variants). Runs are **resumable**: running the same command again skips finished runs, so you can stop with Ctrl+C and continue later, even from another computer with the same config. Leave out `--limit` to run everything that is left.
 
 Keep the computer awake during long batches. On a Mac, prefix the command with `caffeinate -i`; on Linux, run it inside `tmux`.
 
-## 5. Send the results back
+## 6. Results
 
-Zip these two folders and send them to Youssef:
+Nothing to send: the runs are already in the team database. In the Supabase dashboard, the **`run_results`** view has one row per run with its scores. Filter by `experiment` to see yours.
 
-```bash
-zip -r dev-local-v1-results.zip reports/dev-local-v1 runs_local/experiments/dev-local-v1
-```
-
-`reports/` has the summary tables (`summary.csv`, `runs.csv`, `comparisons.json`). `runs_local/` has every run's full log, which we need to see why a run failed.
+Do tell Youssef your **GPU model** and **how long the 6 runs took**. We need this to plan the full 720 runs.
 
 ## Rules that keep the results usable
 
 - **Do not run `configs/eval.yaml`.** The eval set runs once, after the settings are frozen. It refuses to start without `--allow-eval`; please do not add that flag.
-- **Do not change code or prompts on your own.** If you want to try a setting (for example `think: true` or a bigger budget), copy the config, give it a new `name` such as `dev-local-v2-think`, and tell the team what you changed. Every experiment name must mean one fixed set of settings.
-- **Note the hardware:** tell us the GPU model and how long the 6 runs took. We need this to plan the full 720 runs.
+- **One experiment name = one fixed set of settings.** To try something (for example `think: true` or a bigger budget), copy your config, give it a new name such as `dev-alex-v2-think`, and tell the team what you changed. Never reuse someone else's experiment name.
+- **Do not change code or prompts on your own.** Suggest changes to the team instead, so every run stays comparable.
+- **Do not delete or edit rows in Supabase.** If something looks wrong, tell Youssef.
 
 ## Troubleshooting
 
@@ -129,7 +149,10 @@ zip -r dev-local-v1-results.zip reports/dev-local-v1 runs_local/experiments/dev-
 | `trip-agent: command not found` | Activate the venv: `source .venv/bin/activate`. |
 | `No module named 'trip_agent'` | Run `python -m trip_agent ...` instead of `trip-agent ...`, and make sure the repo is not in a synced folder. |
 | Commands hang with no output | The repo is probably in a synced folder (iCloud, OneDrive). Clone it again somewhere else. |
+| `set SUPABASE_URL and SUPABASE_SERVICE_KEY` | `.env` is missing, still has placeholders, or you are not in the repo folder. |
+| `dataset 'main' not found in Supabase` | Either `SUPABASE_URL` is not the team project, or you used the publishable key. You need the **secret** key (`sb_secret_...`); the publishable key sees no rows. |
+| `violates row-level security policy` | Same cause: use the secret key, not the publishable key. |
 | `Connection refused` on port 11434 | Ollama is not running. Start the Ollama app, or run `ollama serve`. |
 | `model 'qwen3.5:9b' is not available` | Run `ollama pull qwen3.5:9b`. |
-| A run shows `error` in the progress line | Run the same command again; failed runs are retried. Send us the log if it keeps failing. |
+| A run shows `error` in the progress line | Run the same command again; failed runs are retried. Tell Youssef the run key if it keeps failing. |
 | Runs are extremely slow | Check `ollama ps`. If it does not say `100% GPU`, the model is running on the CPU. |

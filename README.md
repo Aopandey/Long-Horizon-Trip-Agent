@@ -136,6 +136,7 @@ trip-agent smoke --variant recovery --condition corrupted   # one live episode, 
 1. Create a Supabase project. Put its URL and secret (service-role) key in `.env`.
 2. Apply the schema: paste `supabase/migrations/20261105000000_init.sql` into the SQL editor, or run `supabase link` then `supabase db push`.
 3. Load data: `trip-agent import-data data/ --backend supabase --dataset main`.
+4. Check the stored copy: `trip-agent validate --backend supabase` (same hash as the files).
 
 Row-level security is on for every table with no policies, so the public anon key cannot read anything. Only the secret key used by the runner can.
 

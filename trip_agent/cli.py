@@ -42,12 +42,17 @@ def example_data(out: Annotated[Path, typer.Argument(help="Output folder")] = Pa
 
 
 @app.command()
-def validate(data_dir: DataDir) -> None:
+def validate(
+    data_dir: Annotated[Path | None, typer.Argument(help="Folder with catalog.json and scenarios/*.json")] = None,
+    backend: Annotated[str | None, typer.Option(help="Validate the copy in storage instead: local or supabase")] = None,
+    dataset: Annotated[str, typer.Option(help="Dataset name in storage")] = "main",
+    root: Annotated[str, typer.Option(help="Root folder for the local backend")] = "runs_local",
+) -> None:
     """Validate a dataset: schema, references, horizon counts, and that every reference itinerary is feasible."""
-    from trip_agent.env.loader import DataError, dataset_hash, load_catalog, load_scenarios, validate_dataset
+    from trip_agent.env.loader import DataError, dataset_hash, validate_dataset
 
     try:
-        catalog, scenarios = load_catalog(data_dir), load_scenarios(data_dir)
+        catalog, scenarios = _load_dataset(data_dir, backend, dataset, root)
     except DataError as exc:
         typer.secho(f"invalid data:\n{exc}", fg="red")
         raise typer.Exit(1) from exc
@@ -125,6 +130,8 @@ def smoke(
     max_tool_calls: Annotated[int | None, typer.Option()] = None,
     think: Annotated[bool, typer.Option(help="Enable model thinking")] = False,
     show_messages: Annotated[bool, typer.Option(help="Print the tool calls as they happen")] = True,
+    backend: Annotated[str | None, typer.Option(help="Read the dataset from storage: local or supabase")] = None,
+    dataset: Annotated[str, typer.Option(help="Dataset name in storage")] = "main",
 ) -> None:
     """Run one episode against the live model and print the score. Nothing is stored."""
     from trip_agent.agent.llm.ollama import OllamaClient
@@ -132,14 +139,13 @@ def smoke(
     from trip_agent.agent.policies import make_policy
     from trip_agent.corruption.corrupt import build_plan, clean_plan
     from trip_agent.env.example import example_catalog, example_scenarios
-    from trip_agent.env.loader import load_catalog, load_scenarios
     from trip_agent.eval.evaluator import score_run
     from trip_agent.eval.records import RunRecord
     from trip_agent.runner.experiment import BudgetConfig, LLMConfig
     from trip_agent.tools.environment import TripEnvironment
 
-    if data_dir:
-        catalog, scenarios = load_catalog(data_dir), load_scenarios(data_dir)
+    if data_dir or backend:
+        catalog, scenarios = _load_dataset(data_dir, backend, dataset, "runs_local")
     else:
         catalog, scenarios = example_catalog(), example_scenarios()
     chosen = next((s for s in scenarios if s.id == scenario), None) if scenario else scenarios[0]
@@ -197,6 +203,22 @@ def smoke(
         f"time={result.wall_ms / 1000:.1f}s"
     )
     typer.echo(json.dumps(score.model_dump(exclude={"created_at"}), indent=2))
+
+
+def _load_dataset(data_dir: Path | None, backend: str | None, dataset: str, root: str):
+    """A dataset from a folder, or from storage when a backend is given."""
+    from trip_agent.env.loader import DataError, load_catalog, load_scenarios
+    from trip_agent.storage.base import make_repository
+
+    if data_dir:
+        return load_catalog(data_dir), load_scenarios(data_dir)
+    if not backend:
+        raise DataError("give a data folder, or --backend local|supabase to read the dataset from storage")
+    try:
+        repo = make_repository(backend, root=root, dataset=dataset)
+        return repo.load_catalog(), repo.load_scenarios()
+    except (RuntimeError, ValueError) as exc:
+        raise DataError(f"{backend}:{dataset}: {exc}") from exc
 
 
 def _cfg(config: Path):

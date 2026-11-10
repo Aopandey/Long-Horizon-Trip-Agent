@@ -182,3 +182,15 @@ def test_stats_helpers():
     assert result["mean_diff"] == 0.5 and result["ci_low"] <= 0.5 <= result["ci_high"]
     assert mcnemar_exact([False] * 10, [True] * 10)["p_value"] < 0.01
     assert mcnemar_exact([True, False], [True, False])["p_value"] == 1.0
+
+
+def test_cli_validates_a_dataset_from_storage(tmp_path, catalog, scenarios):
+    from typer.testing import CliRunner
+
+    from trip_agent.cli import app
+
+    LocalRepository(tmp_path, dataset="demo").save_dataset(catalog, scenarios)
+    ok = CliRunner().invoke(app, ["validate", "--backend", "local", "--root", str(tmp_path), "--dataset", "demo"])
+    assert ok.exit_code == 0 and "dataset OK" in ok.output
+    missing = CliRunner().invoke(app, ["validate"])
+    assert missing.exit_code == 1 and "--backend" in missing.output
