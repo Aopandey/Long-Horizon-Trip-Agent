@@ -1,0 +1,107 @@
+{
+  "id": "eval-h10-009",
+  "split": "eval",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-07-26 (Sunday), group of 4, 6 required attractions, lunch and dinner each day, hotel in Cambridge or South End.",
+  "constraints": {
+    "start_date": "2026-07-26",
+    "num_days": 2,
+    "group_size": 4,
+    "budget": 1320.0,
+    "required_attractions": [
+      "a_cocoa_works",
+      "a_fens_garden",
+      "a_innovation_museum",
+      "a_glass_botanicals",
+      "a_swan_boats",
+      "a_wharf_gardens"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Cambridge",
+      "South End"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_fens_garden",
+        "start": "09:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_innovation_museum",
+        "start": "12:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_cocoa_works",
+        "start": "14:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_glass_botanicals",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_swan_boats",
+        "start": "12:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "r_riverbend_curry",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "a_wharf_gardens",
+        "start": "19:05",
+        "kind": "visit"
+      }
+    ]
+  }
+}

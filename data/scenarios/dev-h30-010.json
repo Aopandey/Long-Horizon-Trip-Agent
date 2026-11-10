@@ -1,0 +1,267 @@
+{
+  "id": "dev-h30-010",
+  "split": "dev",
+  "horizon": 30,
+  "description": "6 day(s) from 2026-07-22 (Wednesday), group of 2, 18 required attractions, lunch and dinner each day, hotel in Beacon Hill or Cambridge.",
+  "constraints": {
+    "start_date": "2026-07-22",
+    "num_days": 6,
+    "group_size": 2,
+    "budget": 2520.0,
+    "required_attractions": [
+      "a_puppet_theater",
+      "a_ink_gallery",
+      "a_hillside_burial",
+      "a_jazz_matinee",
+      "a_brickyard_market",
+      "a_swan_boats",
+      "a_crystal_globe",
+      "a_gaslight_walk",
+      "a_science_dome",
+      "a_cocoa_works",
+      "a_freedom_steps",
+      "a_discovery_museum",
+      "a_harbor_cruise",
+      "a_harborfront_art",
+      "a_tea_ship",
+      "a_city_carillon",
+      "a_court_library",
+      "a_college_yard"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Beacon Hill",
+      "Cambridge"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_puppet_theater",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_hillside_burial",
+        "start": "15:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_ink_gallery",
+        "start": "17:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "18:20",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_swan_boats",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_brickyard_market",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "a_gaslight_walk",
+        "start": "11:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "r_square_deli",
+        "start": "13:05",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "a_science_dome",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "r_riverbend_curry",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "a_freedom_steps",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "a_discovery_museum",
+        "start": "11:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "r_brick_oven",
+        "start": "13:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "a_cocoa_works",
+        "start": "14:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref21",
+        "day": 4,
+        "place_id": "a_harbor_cruise",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref22",
+        "day": 4,
+        "place_id": "r_dockside_tacos",
+        "start": "12:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref23",
+        "day": 4,
+        "place_id": "a_harborfront_art",
+        "start": "13:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref24",
+        "day": 4,
+        "place_id": "a_tea_ship",
+        "start": "15:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref25",
+        "day": 4,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref26",
+        "day": 5,
+        "place_id": "a_college_yard",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref27",
+        "day": 5,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref28",
+        "day": 5,
+        "place_id": "a_city_carillon",
+        "start": "12:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref29",
+        "day": 5,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref30",
+        "day": 5,
+        "place_id": "a_court_library",
+        "start": "18:25",
+        "kind": "visit"
+      }
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "id": "dev-h05-007",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-07-02 (Thursday), group of 2, 3 required attractions, lunch and dinner each day, hotel in Beacon Hill or Downtown.",
+  "constraints": {
+    "start_date": "2026-07-02",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 595.0,
+    "required_attractions": [
+      "a_jazz_matinee",
+      "a_tea_ship",
+      "a_ink_gallery"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Beacon Hill",
+      "Downtown"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_beacon_rowhouse",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_tea_ship",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_ink_gallery",
+        "start": "12:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

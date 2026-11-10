@@ -1,0 +1,64 @@
+{
+  "id": "eval-h05-008",
+  "split": "eval",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-07-21 (Tuesday), group of 3, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-07-21",
+    "num_days": 1,
+    "group_size": 3,
+    "budget": 540.0,
+    "required_attractions": [
+      "a_mint_vault",
+      "a_copper_steeple",
+      "a_glass_church"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_mint_vault",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_prince_pastry",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_copper_steeple",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_glass_church",
+        "start": "13:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

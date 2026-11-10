@@ -1,0 +1,107 @@
+{
+  "id": "dev-h10-005",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-07-14 (Tuesday), group of 2, 6 required attractions, lunch and dinner each day, hotel in Beacon Hill or Fenway.",
+  "constraints": {
+    "start_date": "2026-07-14",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 910.0,
+    "required_attractions": [
+      "a_cocoa_works",
+      "a_harborfront_art",
+      "a_wharf_gardens",
+      "a_bakery_tour",
+      "a_tea_ship",
+      "a_science_dome"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Beacon Hill",
+      "Fenway"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_harborfront_art",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_cocoa_works",
+        "start": "14:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_wharf_gardens",
+        "start": "18:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_science_dome",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_prince_pastry",
+        "start": "12:05",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_bakery_tour",
+        "start": "13:05",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_tea_ship",
+        "start": "14:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_gaslight_tavern",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "id": "dev-h10-009",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-07-30 (Thursday), group of 2, 6 required attractions, lunch and dinner each day, hotel in Seaport or South End.",
+  "constraints": {
+    "start_date": "2026-07-30",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 960.0,
+    "required_attractions": [
+      "a_cocoa_works",
+      "a_harborwalk",
+      "a_gaslight_walk",
+      "a_city_carillon",
+      "a_river_kayak",
+      "a_copper_steeple"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Seaport",
+      "South End"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_gaslight_walk",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_cocoa_works",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_harborwalk",
+        "start": "18:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_city_carillon",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_prince_pastry",
+        "start": "13:15",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_copper_steeple",
+        "start": "14:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_river_kayak",
+        "start": "15:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_riverbend_curry",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

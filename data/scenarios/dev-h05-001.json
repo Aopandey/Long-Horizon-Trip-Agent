@@ -2,36 +2,37 @@
   "id": "dev-h05-001",
   "split": "dev",
   "horizon": 5,
-  "description": "One day, three required attractions, lunch and dinner.",
+  "description": "1 day(s) from 2026-07-15 (Wednesday), group of 2, 3 required attractions, lunch and dinner each day.",
   "constraints": {
-    "start_date": "2026-06-01",
+    "start_date": "2026-07-15",
     "num_days": 1,
     "group_size": 2,
-    "budget": 570.0,
+    "budget": 485.0,
     "required_attractions": [
-      "a_crystal_globe",
-      "a_harbor_aquarium",
-      "a_freedom_steps"
+      "a_venetian_court",
+      "a_tea_ship",
+      "a_college_yard"
     ],
     "meals_per_day": [
       "lunch",
       "dinner"
-    ]
+    ],
+    "hotel_neighborhoods": null
   },
   "reference_itinerary": {
-    "hotel_id": "h_copley_grand",
+    "hotel_id": "h_northgate",
     "items": [
       {
         "id": "ref1",
         "day": 0,
-        "place_id": "a_crystal_globe",
+        "place_id": "a_college_yard",
         "start": "10:00",
         "kind": "visit"
       },
       {
         "id": "ref2",
         "day": 0,
-        "place_id": "r_quill_cafe",
+        "place_id": "r_acorn_cafe",
         "start": "11:30",
         "kind": "meal",
         "meal_type": "lunch"
@@ -39,15 +40,15 @@
       {
         "id": "ref3",
         "day": 0,
-        "place_id": "a_harbor_aquarium",
-        "start": "12:25",
+        "place_id": "a_venetian_court",
+        "start": "12:40",
         "kind": "visit"
       },
       {
         "id": "ref4",
         "day": 0,
-        "place_id": "a_freedom_steps",
-        "start": "14:30",
+        "place_id": "a_tea_ship",
+        "start": "15:20",
         "kind": "visit"
       },
       {

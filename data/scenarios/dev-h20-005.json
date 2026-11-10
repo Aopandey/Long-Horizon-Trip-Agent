@@ -1,0 +1,184 @@
+{
+  "id": "dev-h20-005",
+  "split": "dev",
+  "horizon": 20,
+  "description": "4 day(s) from 2026-06-17 (Wednesday), group of 2, 12 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-17",
+    "num_days": 4,
+    "group_size": 2,
+    "budget": 1490.0,
+    "required_attractions": [
+      "a_puppet_theater",
+      "a_fens_garden",
+      "a_brickyard_market",
+      "a_city_carillon",
+      "a_innovation_museum",
+      "a_college_yard",
+      "a_mint_vault",
+      "a_science_dome",
+      "a_harborwalk",
+      "a_bakery_tour",
+      "a_union_squares",
+      "a_hilltop_athenaeum"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_fens_garden",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_brickyard_market",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_puppet_theater",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_college_yard",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_city_carillon",
+        "start": "12:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_innovation_museum",
+        "start": "15:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_mint_vault",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "a_science_dome",
+        "start": "12:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "a_harborwalk",
+        "start": "18:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "a_hilltop_athenaeum",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_bakery_tour",
+        "start": "13:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "r_union_cantina",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "a_union_squares",
+        "start": "18:45",
+        "kind": "visit"
+      }
+    ]
+  }
+}

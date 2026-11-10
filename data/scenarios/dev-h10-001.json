@@ -1,0 +1,107 @@
+{
+  "id": "dev-h10-001",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-06-06 (Saturday), group of 2, 6 required attractions, lunch and dinner each day, hotel in Back Bay or Cambridge.",
+  "constraints": {
+    "start_date": "2026-06-06",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 850.0,
+    "required_attractions": [
+      "a_city_carillon",
+      "a_lantern_hall",
+      "a_hilltop_athenaeum",
+      "a_jazz_matinee",
+      "a_fine_arts",
+      "a_brickyard_market"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Back Bay",
+      "Cambridge"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_lantern_hall",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_city_carillon",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "r_acorn_cafe",
+        "start": "13:15",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_hilltop_athenaeum",
+        "start": "14:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_fine_arts",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "12:50",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_brickyard_market",
+        "start": "13:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

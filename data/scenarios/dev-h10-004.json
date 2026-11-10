@@ -1,0 +1,104 @@
+{
+  "id": "dev-h10-004",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-08-14 (Friday), group of 2, 6 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-08-14",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 785.0,
+    "required_attractions": [
+      "a_glass_botanicals",
+      "a_river_kayak",
+      "a_swan_boats",
+      "a_harbor_cruise",
+      "a_glass_church",
+      "a_hillside_burial"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_glass_botanicals",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_river_kayak",
+        "start": "12:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_swan_boats",
+        "start": "14:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_harbor_cruise",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_glass_church",
+        "start": "13:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "r_prince_pastry",
+        "start": "14:15",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_hillside_burial",
+        "start": "15:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

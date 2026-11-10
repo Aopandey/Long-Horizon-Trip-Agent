@@ -1,9 +1,11 @@
-"""Generate synthetic trip-planning data (stage 5: the full-size catalog)."""
+"""Generate synthetic trip-planning data (stage 6: all 80 scenarios)."""
 
+import csv
 import itertools
 import json
 import math
 import random
+from datetime import date, timedelta
 from pathlib import Path
 
 SEED = 5130   # change this and every random choice changes; keep it and the data is identical
@@ -286,61 +288,133 @@ def find_day_plan(index, hotel_id, attractions, weekday, group_size):
     return best
 
 
-# ---- 4. One scenario (still hand-picked; step 12 makes many at random) -----
-def build_scenario(index):
-    hotel = "h_copley_grand"
-    required = ["a_crystal_globe", "a_harbor_aquarium", "a_freedom_steps"]
-    weekday = 0                                # 2026-06-01 is a Monday
-    result = find_day_plan(index, hotel, required, weekday, group_size=2)
-    if result is None:
-        raise SystemExit("No plan works for these attractions")
-    cost, plan = result
-    cost = round(cost + hotel_cost(index, hotel, group_size=2, nights=1), 2)
+# ---- 4. Many scenarios, chosen at random -----------------------------------
+HORIZONS = [5, 10, 20, 30]       # required commitments; 5 per day -> 1, 2, 4, 6 days
+PER_HORIZON = 10                 # scenarios per horizon in each split
+SPLITS = ["dev", "eval"]         # dev = for tuning, eval = for the final 720 runs
 
-    rng = random.Random(1)                     # fixed seed: same budget every run
-    slack = rng.uniform(0.08, 0.15)            # leave 8-15% spare money
-    budget = math.ceil(cost / (1 - slack) / 5) * 5   # round up to the next $5
-    print(f"  plan cost ${cost}, budget ${budget}")
 
-    items = []
-    for n, (place_id, meal, start, end) in enumerate(plan, start=1):
-        print(f"  {to_clock(start)}-{to_clock(end)}  {place_id}")
-        item = {"id": f"ref{n}", "day": 0, "place_id": place_id, "start": to_clock(start)}
-        item["kind"] = "meal" if meal else "visit"
-        if meal:
-            item["meal_type"] = meal
-        items.append(item)
+def is_tight(attraction):
+    """Opening hours leave 2 hours or less beyond the visit itself."""
+    hours = attraction["hours"]
+    return to_min(hours["close"]) - to_min(hours["open"]) - attraction["visit_minutes"] <= 120
 
-    return {
-        "id": "dev-h05-001",
-        "split": "dev",
-        "horizon": 5,
-        "description": "One day, three required attractions, lunch and dinner.",
-        "constraints": {
-            "start_date": "2026-06-01",
-            "num_days": 1,
-            "group_size": 2,
-            "budget": float(budget),
-            "required_attractions": required,
-            "meals_per_day": ["lunch", "dinner"],
-        },
-        "reference_itinerary": {"hotel_id": hotel, "items": items},
-    }
+
+def make_scenario(index, split, horizon, number, rng):
+    places = index["places"]
+    attractions = [p for p in places.values() if p["kind"] == "attraction"]
+    tight = [a["id"] for a in attractions if is_tight(a)]
+    regular = [a["id"] for a in attractions if not is_tight(a)]
+    hotels = [p for p in places.values() if p["kind"] == "hotel"]
+    days = horizon // 5
+
+    for attempt in range(500):                 # keep trying until a random draw can be solved
+        # -- draw the trip at random --
+        group_size = rng.choice([1, 2, 2, 2, 3, 4])
+        start_date = date(2026, 6, 1) + timedelta(days=rng.randrange(92))   # June to August
+        hotel_areas = None
+        if rng.random() < 0.3:                 # 30% of trips must stay in one of 2 areas
+            hotel_areas = sorted(rng.sample(sorted(NEIGHBORHOODS), 2))
+        picked_tight = rng.sample(tight, days)            # 1 tight attraction per day
+        picked_regular = rng.sample(regular, 2 * days)    # + 2 regular ones per day
+        day_sets = [[picked_tight[d], picked_regular[2 * d], picked_regular[2 * d + 1]] for d in range(days)]
+
+        # -- find a reference plan: try hotels, cheaper ones first --
+        allowed = [h for h in hotels if hotel_areas is None or h["neighborhood"] in hotel_areas]
+        allowed.sort(key=lambda h: hotel_cost(index, h["id"], group_size, days) + rng.uniform(0, 150))
+        for hotel in allowed:
+            day_plans, cost = [], hotel_cost(index, hotel["id"], group_size, days)
+            for d, required in enumerate(day_sets):
+                weekday = (start_date + timedelta(days=d)).weekday()
+                result = find_day_plan(index, hotel["id"], required, weekday, group_size)
+                if result is None:
+                    break                      # this day cannot be done from this hotel
+                cost += result[0]
+                day_plans.append(result[1])
+            if len(day_plans) == days:
+                break                          # every day worked: keep this hotel
+        else:
+            continue                           # no hotel worked: draw a new trip
+
+        # -- budget: 8-15% above the reference cost --
+        cost = round(cost, 2)
+        slack = rng.uniform(0.08, 0.15)
+        budget = math.ceil(cost / (1 - slack) / 5) * 5
+
+        items = []
+        for d, plan in enumerate(day_plans):
+            for place_id, meal, start, end in plan:
+                item = {"id": f"ref{len(items) + 1}", "day": d, "place_id": place_id, "start": to_clock(start)}
+                item["kind"] = "meal" if meal else "visit"
+                if meal:
+                    item["meal_type"] = meal
+                items.append(item)
+
+        scenario_id = f"{split}-h{horizon:02d}-{number:03d}"
+        description = (f"{days} day(s) from {start_date} ({start_date:%A}), group of {group_size}, "
+                       f"{3 * days} required attractions, lunch and dinner each day")
+        if hotel_areas:
+            description += f", hotel in {' or '.join(hotel_areas)}"
+        scenario = {
+            "id": scenario_id,
+            "split": split,
+            "horizon": horizon,
+            "description": description + ".",
+            "constraints": {
+                "start_date": start_date.isoformat(),
+                "num_days": days,
+                "group_size": group_size,
+                "budget": float(budget),
+                "required_attractions": [a for day in day_sets for a in day],
+                "meals_per_day": ["lunch", "dinner"],
+                "hotel_neighborhoods": hotel_areas,
+            },
+            "reference_itinerary": {"hotel_id": hotel["id"], "items": items},
+        }
+        summary = {
+            "id": scenario_id, "split": split, "horizon": horizon, "days": days,
+            "group_size": group_size, "start": start_date.isoformat(), "hotel": hotel["id"],
+            "hotel_restricted": bool(hotel_areas), "reference_cost": cost, "budget": budget,
+            "budget_slack": round((budget - cost) / budget, 3), "attempts": attempt + 1,
+        }
+        return scenario, summary
+    raise SystemExit(f"Could not build {split} H={horizon} #{number}")
 
 
 # ---- 5. Write the files -----------------------------------------------------
 def main():
     out = Path("data")
     (out / "scenarios").mkdir(parents=True, exist_ok=True)
+    for old in (out / "scenarios").glob("*.json"):
+        old.unlink()                           # start clean so no stale scenario is left behind
 
     catalog, positions = build_catalog(random.Random(SEED))
     (out / "catalog.json").write_text(json.dumps(catalog, indent=2))
     index = make_index(catalog, positions)
 
-    scenario = build_scenario(index)
-    (out / "scenarios" / f"{scenario['id']}.json").write_text(json.dumps(scenario, indent=2))
+    rows, seen = [], set()
+    for split in SPLITS:
+        for horizon in HORIZONS:
+            for number in range(1, PER_HORIZON + 1):
+                rng = random.Random(f"{SEED}-{split}-{horizon}-{number}")   # own seed per scenario
+                while True:
+                    scenario, summary = make_scenario(index, split, horizon, number, rng)
+                    required = frozenset(scenario["constraints"]["required_attractions"])
+                    if required not in seen:   # never repeat the same set of attractions
+                        seen.add(required)
+                        break
+                (out / "scenarios" / f"{scenario['id']}.json").write_text(json.dumps(scenario, indent=2))
+                rows.append(summary)
+                print(f"{summary['id']}: {summary['days']} day(s), group {summary['group_size']}, "
+                      f"cost ${summary['reference_cost']:.0f}, budget ${summary['budget']} "
+                      f"({summary['budget_slack']:.0%} slack)")
 
-    print(f"Wrote {len(index['places'])} places, {len(catalog['travel'])} travel legs and 1 scenario to {out}/")
+    with (out / "summary.csv").open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"Wrote {len(index['places'])} places, {len(catalog['travel'])} travel legs "
+          f"and {len(rows)} scenarios to {out}/")
 
 
 if __name__ == "__main__":
