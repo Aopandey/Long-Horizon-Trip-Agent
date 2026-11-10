@@ -114,10 +114,10 @@ cd Long-Horizon-Trip-Agent
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev,supabase]"
 cp .env.example .env          # then fill in OLLAMA_HOST and the Supabase keys
-ollama pull qwen3.5:9b        # about 6.5 GB
+ollama pull qwen3.5:9b        # 7.6 GB download, about 9 GB of memory when loaded
 ```
 
-On macOS, if the repo is inside an iCloud-synced folder (Desktop or Documents), the `trip-agent` command may fail with `No module named 'trip_agent'`. Use `python -m trip_agent ...` instead, or keep the virtual environment outside the synced folder.
+On macOS, clone the repo outside iCloud-synced folders (Desktop and Documents). Inside them, iCloud can hide the venv's `.pth` file (`No module named 'trip_agent'`), and with Optimize Mac Storage it can evict source and venv files, which makes Python and git hang while they wait for a download.
 
 ### Try it
 

@@ -75,7 +75,7 @@ Computed by `eval/evaluator.py` after a run, from the stored record:
 
 ## Model notes (Qwen3.5 9B on Ollama)
 
-- `qwen3.5:9b` is about 6.5 GB (Q4). Pull it once with `ollama pull qwen3.5:9b`; `trip-agent check-llm` confirms it is available and supports tools.
+- `qwen3.5:9b` is a 7.6 GB download (9.7B parameters, NVFP4 weights, with a vision projector). On a Mac it used 9.0 GB of GPU memory at a 32K context. Pull it once with `ollama pull qwen3.5:9b`; `trip-agent check-llm` confirms it is available and supports tools.
 - **Context:** Ollama's default context window is small. The config sets `num_ctx: 32768`. Long horizons resend a growing history every turn, so watch for `context_near_limit` events and raise `num_ctx` if they appear.
 - **Thinking:** off by default for speed. Try `think: true` on dev; it may improve planning at a large time cost.
 - **Sampling:** temperature and per-run seeds are passed to Ollama. The seed depends on (scenario, condition, repeat) but not the variant, so variants are paired.
@@ -101,7 +101,7 @@ Computed by `eval/evaluator.py` after a run, from the stored record:
 
 ## Open items
 
-- School server: GPU and memory (a 9B Q4 model needs about 8 GB of VRAM), whether Ollama can be installed, scheduler and time limits, outbound access to Supabase.
+- School server: GPU and memory (plan for at least 10-12 GB of GPU memory, more for longer contexts), whether Ollama can be installed and runs this model's NVFP4 weights on that GPU (run `check-llm` and `smoke` there first), scheduler and time limits, outbound access to Supabase.
 - Supabase project: who owns it, and who gets the secret key.
 - Metric definitions in `eval/evaluator.py` are provisional; the team should confirm them before the freeze.
 - The proposal gives no deadline, so the phases have no dates yet.
