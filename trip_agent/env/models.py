@@ -207,9 +207,10 @@ class Constraints(_Strict):
 
     @model_validator(mode="after")
     def _fill_meal_windows(self) -> Constraints:
+        # Fill missing windows and fix the key order, so the same scenario always serializes to the
+        # same JSON (Postgres jsonb reorders keys, which would otherwise change the dataset hash).
         defaults = _default_meal_windows()
-        for meal in MealType:
-            self.meal_windows.setdefault(meal, defaults[meal])
+        self.meal_windows = {meal: self.meal_windows.get(meal, defaults[meal]) for meal in MealType}
         if self.day_start >= self.day_end:
             raise ValueError("day_start must be before day_end")
         return self

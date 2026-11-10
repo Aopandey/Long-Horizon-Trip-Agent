@@ -64,3 +64,17 @@ def test_missing_files_raise_data_error(tmp_path):
         load_catalog(tmp_path)
     with pytest.raises(DataError):
         load_scenarios(tmp_path)
+
+
+def test_dataset_hash_ignores_json_key_order(catalog, scenarios):
+    """Postgres jsonb returns object keys in its own order; the hash must not change."""
+    from trip_agent.env.loader import dataset_hash
+    from trip_agent.env.models import Scenario
+
+    shuffled = []
+    for s in scenarios:
+        data = s.model_dump(mode="json")
+        windows = data["constraints"]["meal_windows"]
+        data["constraints"]["meal_windows"] = dict(reversed(list(windows.items())))
+        shuffled.append(Scenario.model_validate(data))
+    assert dataset_hash(catalog, shuffled) == dataset_hash(catalog, scenarios)
