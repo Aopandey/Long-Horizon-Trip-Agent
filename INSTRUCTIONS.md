@@ -91,11 +91,11 @@ If `check-llm` or `smoke` fails, or `ollama ps` shows CPU, stop and send Youssef
 
 ## 5. Run a small dev batch
 
-Create a config file named after you, for example `configs/dev-alex.yaml`, with this content. Change `alex` in the file name and in `name:` to your own name:
+Create the file `configs/dev-archer.yaml` with this content. (Other teammates: use your own name instead of `archer`, in the file name and in `name:`.)
 
 ```yaml
 # Dev tuning: data from Supabase, results saved to Supabase.
-name: dev-alex-v1        # must be unique in the team database: put your name in it
+name: dev-archer-v1        # must be unique in the team database: put your name in it
 split: dev
 horizons: [5]            # start with the 1-day scenarios
 variants: [standard, verification, recovery]
@@ -116,13 +116,13 @@ storage: {backend: supabase, dataset: main}
 Run the first 6 runs: scenario `dev-h05-001` in both conditions with all three variants.
 
 ```bash
-trip-agent run configs/dev-alex.yaml --limit 6
+trip-agent run configs/dev-archer.yaml --limit 6
 ```
 
 Each finished run is saved to Supabase immediately with its score. Then print the summary table:
 
 ```bash
-trip-agent report configs/dev-alex.yaml
+trip-agent report configs/dev-archer.yaml
 ```
 
 The whole config is 60 runs (10 scenarios x 2 conditions x 3 variants). Runs are **resumable**: running the same command again skips finished runs, so you can stop with Ctrl+C and continue later, even from another computer with the same config. Leave out `--limit` to run everything that is left.
@@ -138,7 +138,7 @@ Do tell Youssef your **GPU model** and **how long the 6 runs took**. We need thi
 ## Rules that keep the results usable
 
 - **Do not run `configs/eval.yaml`.** The eval set runs once, after the settings are frozen. It refuses to start without `--allow-eval`; please do not add that flag.
-- **One experiment name = one fixed set of settings.** To try something (for example `think: true` or a bigger budget), copy your config, give it a new name such as `dev-alex-v2-think`, and tell the team what you changed. Never reuse someone else's experiment name.
+- **One experiment name = one fixed set of settings.** To try something (for example `think: true` or a bigger budget), copy your config, give it a new name such as `dev-archer-v2-think`, and tell the team what you changed. Never reuse someone else's experiment name.
 - **Do not change code or prompts on your own.** Suggest changes to the team instead, so every run stays comparable.
 - **Do not delete or edit rows in Supabase.** If something looks wrong, tell Youssef.
 
