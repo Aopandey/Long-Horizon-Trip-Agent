@@ -1,0 +1,64 @@
+{
+  "id": "dev-h05-004",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-07-06 (Monday), group of 2, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-07-06",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 390.0,
+    "required_attractions": [
+      "a_symphony_tour",
+      "a_court_library",
+      "a_discovery_museum"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_discovery_museum",
+        "start": "09:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "12:05",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_symphony_tour",
+        "start": "13:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_court_library",
+        "start": "18:35",
+        "kind": "visit"
+      }
+    ]
+  }
+}

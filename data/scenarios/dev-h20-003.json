@@ -1,0 +1,184 @@
+{
+  "id": "dev-h20-003",
+  "split": "dev",
+  "horizon": 20,
+  "description": "4 day(s) from 2026-06-25 (Thursday), group of 2, 12 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-25",
+    "num_days": 4,
+    "group_size": 2,
+    "budget": 1785.0,
+    "required_attractions": [
+      "a_jazz_matinee",
+      "a_ink_gallery",
+      "a_wharf_gardens",
+      "a_harbor_cruise",
+      "a_discovery_museum",
+      "a_harbor_aquarium",
+      "a_glass_botanicals",
+      "a_hillside_burial",
+      "a_tea_ship",
+      "a_crystal_globe",
+      "a_northpoint_house",
+      "a_fine_arts"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_ink_gallery",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_wharf_gardens",
+        "start": "18:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_harbor_cruise",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_dockside_tacos",
+        "start": "12:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_discovery_museum",
+        "start": "13:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_harbor_aquarium",
+        "start": "15:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_dockside_tacos",
+        "start": "18:15",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_glass_botanicals",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "a_tea_ship",
+        "start": "11:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "r_prince_pastry",
+        "start": "13:00",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "a_hillside_burial",
+        "start": "13:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "r_gaslight_tavern",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_northpoint_house",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "a_fine_arts",
+        "start": "14:05",
+        "kind": "visit"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

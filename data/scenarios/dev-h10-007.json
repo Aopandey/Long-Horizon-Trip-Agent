@@ -1,0 +1,104 @@
+{
+  "id": "dev-h10-007",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-07-29 (Wednesday), group of 3, 6 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-07-29",
+    "num_days": 2,
+    "group_size": 3,
+    "budget": 1105.0,
+    "required_attractions": [
+      "a_crystal_globe",
+      "a_lantern_hall",
+      "a_glass_church",
+      "a_cocoa_works",
+      "a_golden_dome",
+      "a_swan_boats"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_lantern_hall",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_glass_church",
+        "start": "14:05",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_golden_dome",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_swan_boats",
+        "start": "13:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_cocoa_works",
+        "start": "14:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

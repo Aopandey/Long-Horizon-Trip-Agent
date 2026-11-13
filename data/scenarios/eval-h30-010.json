@@ -1,0 +1,264 @@
+{
+  "id": "eval-h30-010",
+  "split": "eval",
+  "horizon": 30,
+  "description": "6 day(s) from 2026-07-15 (Wednesday), group of 1, 18 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-07-15",
+    "num_days": 6,
+    "group_size": 1,
+    "budget": 1805.0,
+    "required_attractions": [
+      "a_bakery_tour",
+      "a_skyview_deck",
+      "a_river_kayak",
+      "a_ballpark_tour",
+      "a_court_library",
+      "a_harbor_aquarium",
+      "a_jazz_matinee",
+      "a_innovation_museum",
+      "a_swan_boats",
+      "a_city_carillon",
+      "a_freedom_steps",
+      "a_union_squares",
+      "a_venetian_court",
+      "a_fine_arts",
+      "a_gaslight_walk",
+      "a_crystal_globe",
+      "a_hillside_burial",
+      "a_golden_dome"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_river_kayak",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_square_deli",
+        "start": "11:35",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_bakery_tour",
+        "start": "13:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_skyview_deck",
+        "start": "18:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_ballpark_tour",
+        "start": "09:15",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_court_library",
+        "start": "12:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_harbor_aquarium",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_innovation_museum",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "a_swan_boats",
+        "start": "12:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "r_brick_oven",
+        "start": "13:05",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "a_city_carillon",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_freedom_steps",
+        "start": "14:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "a_union_squares",
+        "start": "18:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref21",
+        "day": 4,
+        "place_id": "a_venetian_court",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref22",
+        "day": 4,
+        "place_id": "r_brick_oven",
+        "start": "13:20",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref23",
+        "day": 4,
+        "place_id": "a_fine_arts",
+        "start": "14:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref24",
+        "day": 4,
+        "place_id": "a_gaslight_walk",
+        "start": "17:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref25",
+        "day": 4,
+        "place_id": "r_fens_noodle",
+        "start": "19:05",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref26",
+        "day": 5,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref27",
+        "day": 5,
+        "place_id": "a_hillside_burial",
+        "start": "11:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref28",
+        "day": 5,
+        "place_id": "r_acorn_cafe",
+        "start": "12:25",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref29",
+        "day": 5,
+        "place_id": "a_golden_dome",
+        "start": "13:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref30",
+        "day": 5,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

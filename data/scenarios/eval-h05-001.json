@@ -1,0 +1,64 @@
+{
+  "id": "eval-h05-001",
+  "split": "eval",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-06-07 (Sunday), group of 2, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-07",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 470.0,
+    "required_attractions": [
+      "a_ballpark_tour",
+      "a_lantern_hall",
+      "a_freedom_steps"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_ballpark_tour",
+        "start": "09:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_lantern_hall",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_freedom_steps",
+        "start": "13:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

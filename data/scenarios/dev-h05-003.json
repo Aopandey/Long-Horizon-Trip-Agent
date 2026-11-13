@@ -1,0 +1,64 @@
+{
+  "id": "dev-h05-003",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-08-28 (Friday), group of 2, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-08-28",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 455.0,
+    "required_attractions": [
+      "a_bakery_tour",
+      "a_hilltop_athenaeum",
+      "a_wharf_gardens"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_northgate",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "r_prince_pastry",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_bakery_tour",
+        "start": "13:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_hilltop_athenaeum",
+        "start": "14:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_gaslight_tavern",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_wharf_gardens",
+        "start": "18:50",
+        "kind": "visit"
+      }
+    ]
+  }
+}

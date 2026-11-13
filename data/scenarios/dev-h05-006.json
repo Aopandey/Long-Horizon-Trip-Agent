@@ -1,0 +1,67 @@
+{
+  "id": "dev-h05-006",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-08-27 (Thursday), group of 2, 3 required attractions, lunch and dinner each day, hotel in Cambridge or Seaport.",
+  "constraints": {
+    "start_date": "2026-08-27",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 390.0,
+    "required_attractions": [
+      "a_mint_vault",
+      "a_wharf_gardens",
+      "a_gaslight_walk"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Cambridge",
+      "Seaport"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_mint_vault",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_gaslight_walk",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_gaslight_tavern",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_wharf_gardens",
+        "start": "18:50",
+        "kind": "visit"
+      }
+    ]
+  }
+}

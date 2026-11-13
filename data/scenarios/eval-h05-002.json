@@ -1,0 +1,64 @@
+{
+  "id": "eval-h05-002",
+  "split": "eval",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-07-26 (Sunday), group of 2, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-07-26",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 420.0,
+    "required_attractions": [
+      "a_cocoa_works",
+      "a_freedom_steps",
+      "a_union_squares"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_northgate",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_cocoa_works",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_union_squares",
+        "start": "16:15",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_freedom_steps",
+        "start": "17:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "19:10",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

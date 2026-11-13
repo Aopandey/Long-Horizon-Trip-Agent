@@ -1,0 +1,64 @@
+{
+  "id": "eval-h05-006",
+  "split": "eval",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-08-02 (Sunday), group of 2, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-08-02",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 490.0,
+    "required_attractions": [
+      "a_venetian_court",
+      "a_tea_ship",
+      "a_discovery_museum"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_discovery_museum",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_venetian_court",
+        "start": "12:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "r_newbury_greens",
+        "start": "14:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_tea_ship",
+        "start": "15:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}
