@@ -1,0 +1,104 @@
+{
+  "id": "eval-h10-005",
+  "split": "eval",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-08-20 (Thursday), group of 2, 6 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-08-20",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 795.0,
+    "required_attractions": [
+      "a_ballpark_tour",
+      "a_fens_garden",
+      "a_union_squares",
+      "a_glass_botanicals",
+      "a_lantern_hall",
+      "a_harborfront_art"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_ballpark_tour",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_fens_garden",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "12:05",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_union_squares",
+        "start": "13:05",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_glass_botanicals",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_lantern_hall",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_harborfront_art",
+        "start": "13:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

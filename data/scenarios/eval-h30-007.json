@@ -1,0 +1,267 @@
+{
+  "id": "eval-h30-007",
+  "split": "eval",
+  "horizon": 30,
+  "description": "6 day(s) from 2026-07-17 (Friday), group of 1, 18 required attractions, lunch and dinner each day, hotel in Cambridge or North End.",
+  "constraints": {
+    "start_date": "2026-07-17",
+    "num_days": 6,
+    "group_size": 1,
+    "budget": 2175.0,
+    "required_attractions": [
+      "a_ballpark_tour",
+      "a_lantern_hall",
+      "a_golden_dome",
+      "a_venetian_court",
+      "a_discovery_museum",
+      "a_innovation_museum",
+      "a_crystal_globe",
+      "a_glass_church",
+      "a_skyview_deck",
+      "a_city_carillon",
+      "a_union_squares",
+      "a_river_kayak",
+      "a_glass_botanicals",
+      "a_harbor_aquarium",
+      "a_hilltop_athenaeum",
+      "a_puppet_theater",
+      "a_harborfront_art",
+      "a_harborwalk"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Cambridge",
+      "North End"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_northgate",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_ballpark_tour",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_lantern_hall",
+        "start": "11:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "r_acorn_cafe",
+        "start": "12:35",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_golden_dome",
+        "start": "13:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_discovery_museum",
+        "start": "09:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_newbury_greens",
+        "start": "11:50",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_venetian_court",
+        "start": "12:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_innovation_museum",
+        "start": "15:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "a_glass_church",
+        "start": "11:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "a_skyview_deck",
+        "start": "12:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "r_brick_oven",
+        "start": "13:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "a_city_carillon",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_union_squares",
+        "start": "14:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "a_river_kayak",
+        "start": "16:15",
+        "kind": "visit"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "r_copley_diner",
+        "start": "18:15",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref21",
+        "day": 4,
+        "place_id": "a_glass_botanicals",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref22",
+        "day": 4,
+        "place_id": "a_harbor_aquarium",
+        "start": "11:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref23",
+        "day": 4,
+        "place_id": "r_acorn_cafe",
+        "start": "13:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref24",
+        "day": 4,
+        "place_id": "a_hilltop_athenaeum",
+        "start": "14:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref25",
+        "day": 4,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref26",
+        "day": 5,
+        "place_id": "r_prince_pastry",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref27",
+        "day": 5,
+        "place_id": "a_harborfront_art",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref28",
+        "day": 5,
+        "place_id": "a_puppet_theater",
+        "start": "14:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref29",
+        "day": 5,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref30",
+        "day": 5,
+        "place_id": "a_harborwalk",
+        "start": "18:30",
+        "kind": "visit"
+      }
+    ]
+  }
+}

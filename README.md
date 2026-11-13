@@ -2,7 +2,7 @@
 
 A CS 5130 research project on AI planning reliability under dependent constraints and deliberately inaccurate tool responses.
 
-**Status:** Proposal and team discussion. Implementation has not started. The team will choose the implementation language, models, frameworks, APIs, and supporting tools together.
+**Status:** Core implementation built: environment, misinformation layer, checker, tools, three agent variants, evaluator, Supabase storage and experiment runner. Next: the team's synthetic dataset, then dev tuning. See [docs/PLAN.md](docs/PLAN.md).
 
 ## Project proposal
 
@@ -96,8 +96,72 @@ Constraint density and budget and scheduling slack will be kept approximately co
 - Youssef Yacoub
 - Naksha
 
-## Implementation decisions
+## Implementation
 
-The team will discuss the language, model/provider, agent framework or custom implementation, storage format, testing tools, and experiment tooling before implementation. No installation or execution instructions are available yet.
+| Piece | Choice |
+| --- | --- |
+| Language | Python 3.11+ |
+| Model | Qwen3.5 9B (`qwen3.5:9b`) served by [Ollama](https://ollama.com), on a laptop or the school server |
+| Agent | Custom tool-calling loop; the three variants differ only in prompt and scaffold policy |
+| Storage | Supabase (Postgres), or local JSON files for offline work |
+| Data | Synthetic catalog and scenarios supplied by the team: [docs/DATA_FORMAT.md](docs/DATA_FORMAT.md) |
+
+The design, metrics and tuning protocol are in [docs/PLAN.md](docs/PLAN.md).
+
+### Setup
+
+```bash
+git clone https://github.com/Aopandey/Long-Horizon-Trip-Agent.git
+cd Long-Horizon-Trip-Agent
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev,supabase]"
+cp .env.example .env          # then fill in OLLAMA_HOST and the Supabase keys
+ollama pull qwen3.5:9b        # 7.6 GB download, about 9 GB of memory when loaded
+```
+
+On macOS, clone the repo outside iCloud-synced folders (Desktop and Documents). Inside them, iCloud can hide the venv's `.pth` file (`No module named 'trip_agent'`), and with Optimize Mac Storage it can evict source and venv files, which makes Python and git hang while they wait for a download.
+
+### Try it
+
+Running the model on your own computer for dev tuning: follow [INSTRUCTIONS.md](INSTRUCTIONS.md).
+
+```bash
+pytest -m "not ollama"                       # unit tests, no model needed
+trip-agent check-llm                         # Ollama reachable, model pulled, tools supported
+trip-agent example-data examples/tiny        # tiny format demo (not experiment data)
+trip-agent validate examples/tiny
+trip-agent smoke --variant recovery --condition corrupted   # one live episode, scored
+```
+
+### Supabase
+
+1. Create a Supabase project. Put its URL and secret (service-role) key in `.env`.
+2. Apply the schema: paste `supabase/migrations/20261105000000_init.sql` into the SQL editor, or run `supabase link` then `supabase db push`.
+3. Load data: `trip-agent import-data data/ --backend supabase --dataset main`.
+4. Check the stored copy: `trip-agent validate --backend supabase` (same hash as the files).
+
+Row-level security is on for every table with no policies, so the public anon key cannot read anything. Only the secret key used by the runner can.
+
+### Run experiments
+
+```bash
+trip-agent run configs/dev.yaml              # resumable: completed runs are skipped
+trip-agent report configs/dev.yaml           # reports/<name>/runs.csv, summary.csv, comparisons.json
+trip-agent run configs/eval.yaml --allow-eval   # once, after freezing settings
+```
+
+### Code map
+
+```
+trip_agent/env/         data model, fact keys, loading and validation, tiny example
+trip_agent/corruption/  seeded misinformation
+trip_agent/checker/     one checker for the agent (beliefs) and the evaluator (truth)
+trip_agent/tools/       the 10 agent tools and the shared tool-call budget
+trip_agent/agent/       Ollama client, prompts, the three variants, episode loop
+trip_agent/eval/        run records, independent scoring, statistics
+trip_agent/storage/     local and Supabase repositories
+trip_agent/runner/      experiment grid and configs
+supabase/migrations/    database schema
+```
 
 All environment information is synthetic and intended for controlled experiments rather than current travel advice.

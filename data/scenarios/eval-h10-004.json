@@ -1,0 +1,107 @@
+{
+  "id": "eval-h10-004",
+  "split": "eval",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-08-27 (Thursday), group of 2, 6 required attractions, lunch and dinner each day, hotel in Back Bay or Fenway.",
+  "constraints": {
+    "start_date": "2026-08-27",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 900.0,
+    "required_attractions": [
+      "a_harbor_cruise",
+      "a_tea_ship",
+      "a_northpoint_house",
+      "a_ballpark_tour",
+      "a_ink_gallery",
+      "a_harbor_aquarium"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Back Bay",
+      "Fenway"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_northpoint_house",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_harbor_cruise",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_tea_ship",
+        "start": "14:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_ballpark_tour",
+        "start": "09:15",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_ink_gallery",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_harbor_aquarium",
+        "start": "13:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

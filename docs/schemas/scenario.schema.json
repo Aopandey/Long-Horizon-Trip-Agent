@@ -1,0 +1,298 @@
+{
+  "$defs": {
+    "Constraints": {
+      "additionalProperties": false,
+      "properties": {
+        "start_date": {
+          "format": "date",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "num_days": {
+          "minimum": 1,
+          "title": "Num Days",
+          "type": "integer"
+        },
+        "nights": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Hotel nights; defaults to num_days",
+          "title": "Nights"
+        },
+        "group_size": {
+          "minimum": 1,
+          "title": "Group Size",
+          "type": "integer"
+        },
+        "budget": {
+          "description": "Total budget for the whole group",
+          "exclusiveMinimum": 0,
+          "title": "Budget",
+          "type": "number"
+        },
+        "day_start": {
+          "default": 540,
+          "examples": [
+            "09:30"
+          ],
+          "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$",
+          "title": "Day Start",
+          "type": "string"
+        },
+        "day_end": {
+          "default": 1320,
+          "examples": [
+            "09:30"
+          ],
+          "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$",
+          "title": "Day End",
+          "type": "string"
+        },
+        "required_attractions": {
+          "items": {
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+            "type": "string"
+          },
+          "title": "Required Attractions",
+          "type": "array"
+        },
+        "meals_per_day": {
+          "items": {
+            "$ref": "#/$defs/MealType"
+          },
+          "title": "Meals Per Day",
+          "type": "array"
+        },
+        "meal_windows": {
+          "additionalProperties": {
+            "$ref": "#/$defs/MealWindow"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/MealType"
+          },
+          "title": "Meal Windows",
+          "type": "object"
+        },
+        "hotel_neighborhoods": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Allowed hotel neighborhoods; null means any",
+          "title": "Hotel Neighborhoods"
+        },
+        "max_tool_calls": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Overrides the experiment budget",
+          "title": "Max Tool Calls"
+        }
+      },
+      "required": [
+        "start_date",
+        "num_days",
+        "group_size",
+        "budget"
+      ],
+      "title": "Constraints",
+      "type": "object"
+    },
+    "ItemKind": {
+      "enum": [
+        "visit",
+        "meal"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    },
+    "Itinerary": {
+      "additionalProperties": false,
+      "properties": {
+        "hotel_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hotel Id"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ItineraryItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "title": "Itinerary",
+      "type": "object"
+    },
+    "ItineraryItem": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "day": {
+          "minimum": 0,
+          "title": "Day",
+          "type": "integer"
+        },
+        "place_id": {
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+          "title": "Place Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ItemKind"
+        },
+        "meal_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MealType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "start": {
+          "examples": [
+            "09:30"
+          ],
+          "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "day",
+        "place_id",
+        "kind",
+        "start"
+      ],
+      "title": "ItineraryItem",
+      "type": "object"
+    },
+    "MealType": {
+      "enum": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "title": "MealType",
+      "type": "string"
+    },
+    "MealWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "examples": [
+            "09:30"
+          ],
+          "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$",
+          "title": "Start",
+          "type": "string"
+        },
+        "end": {
+          "examples": [
+            "09:30"
+          ],
+          "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$",
+          "title": "End",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "MealWindow",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "maxLength": 64,
+      "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "dev",
+        "eval"
+      ],
+      "title": "Split",
+      "type": "string"
+    },
+    "horizon": {
+      "description": "Number of required dependent commitments",
+      "minimum": 1,
+      "title": "Horizon",
+      "type": "integer"
+    },
+    "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+    },
+    "constraints": {
+      "$ref": "#/$defs/Constraints"
+    },
+    "reference_itinerary": {
+      "$ref": "#/$defs/Itinerary",
+      "description": "Hidden valid itinerary proving feasibility"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "split",
+    "horizon",
+    "constraints",
+    "reference_itinerary"
+  ],
+  "title": "Scenario",
+  "type": "object"
+}

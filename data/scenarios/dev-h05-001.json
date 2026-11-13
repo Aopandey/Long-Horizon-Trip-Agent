@@ -1,0 +1,64 @@
+{
+  "id": "dev-h05-001",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-07-15 (Wednesday), group of 2, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-07-15",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 485.0,
+    "required_attractions": [
+      "a_venetian_court",
+      "a_tea_ship",
+      "a_college_yard"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_northgate",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_college_yard",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_venetian_court",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_tea_ship",
+        "start": "15:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

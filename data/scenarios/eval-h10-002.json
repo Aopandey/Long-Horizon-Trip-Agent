@@ -1,0 +1,107 @@
+{
+  "id": "eval-h10-002",
+  "split": "eval",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-08-06 (Thursday), group of 2, 6 required attractions, lunch and dinner each day, hotel in Cambridge or Seaport.",
+  "constraints": {
+    "start_date": "2026-08-06",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 885.0,
+    "required_attractions": [
+      "a_bakery_tour",
+      "a_freedom_steps",
+      "a_science_dome",
+      "a_venetian_court",
+      "a_river_kayak",
+      "a_innovation_museum"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Cambridge",
+      "Seaport"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_science_dome",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_prince_pastry",
+        "start": "11:40",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_bakery_tour",
+        "start": "13:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_freedom_steps",
+        "start": "14:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_riverbend_curry",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_venetian_court",
+        "start": "12:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_innovation_museum",
+        "start": "15:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_river_kayak",
+        "start": "17:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_fens_noodle",
+        "start": "19:05",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

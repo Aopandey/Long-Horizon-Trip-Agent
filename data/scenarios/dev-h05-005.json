@@ -1,0 +1,64 @@
+{
+  "id": "dev-h05-005",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-06-04 (Thursday), group of 3, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-04",
+    "num_days": 1,
+    "group_size": 3,
+    "budget": 725.0,
+    "required_attractions": [
+      "a_cocoa_works",
+      "a_discovery_museum",
+      "a_tea_ship"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_discovery_museum",
+        "start": "09:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_tea_ship",
+        "start": "11:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "13:25",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_cocoa_works",
+        "start": "14:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

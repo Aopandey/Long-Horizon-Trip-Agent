@@ -1,0 +1,31 @@
+# Dev-set tuning runs. Change prompts and settings here freely; never tune on the eval split.
+name: dev-v1
+split: dev
+# Dataset comes from storage (trip-agent import-data). Or set data_dir: data/ to read from disk.
+variants: [standard, verification, recovery]
+conditions: [clean, corrupted]
+repeats: 3
+seed: 0
+corruption:
+  rate: 0.2   # fraction of eligible facts altered in the corrupted condition
+  seed: 0
+budget:
+  base: 20            # tool-call limit = base + per_commitment * horizon
+  per_commitment: 5
+policy:
+  hours_slack_minutes: 120
+  travel_slack_minutes: 20
+  budget_slack_fraction: 0.3
+  max_repairs_per_conflict: 3
+llm:
+  model: qwen3.5:9b
+  host: null          # default: $OLLAMA_HOST or http://localhost:11434
+  temperature: 0.6
+  num_ctx: 32768      # raise for H=20/30 if the event log shows context_near_limit
+  num_predict: 2048
+  think: false
+max_turns: 200
+concurrency: 1        # raise together with OLLAMA_NUM_PARALLEL on the server
+storage:
+  backend: supabase
+  dataset: main

@@ -1,0 +1,184 @@
+{
+  "id": "dev-h20-001",
+  "split": "dev",
+  "horizon": 20,
+  "description": "4 day(s) from 2026-08-26 (Wednesday), group of 2, 12 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-08-26",
+    "num_days": 4,
+    "group_size": 2,
+    "budget": 1475.0,
+    "required_attractions": [
+      "a_bakery_tour",
+      "a_ink_gallery",
+      "a_fens_garden",
+      "a_city_carillon",
+      "a_freedom_steps",
+      "a_hilltop_athenaeum",
+      "a_venetian_court",
+      "a_science_dome",
+      "a_lantern_hall",
+      "a_mint_vault",
+      "a_swan_boats",
+      "a_northpoint_house"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_fens_garden",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_ink_gallery",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_bakery_tour",
+        "start": "13:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_freedom_steps",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_city_carillon",
+        "start": "11:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "r_acorn_cafe",
+        "start": "13:25",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_hilltop_athenaeum",
+        "start": "14:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_science_dome",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "r_square_deli",
+        "start": "11:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "a_venetian_court",
+        "start": "13:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "a_lantern_hall",
+        "start": "15:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "a_mint_vault",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "r_prince_pastry",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_northpoint_house",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "a_swan_boats",
+        "start": "13:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

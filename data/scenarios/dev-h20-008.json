@@ -1,0 +1,187 @@
+{
+  "id": "dev-h20-008",
+  "split": "dev",
+  "horizon": 20,
+  "description": "4 day(s) from 2026-07-09 (Thursday), group of 2, 12 required attractions, lunch and dinner each day, hotel in North End or South End.",
+  "constraints": {
+    "start_date": "2026-07-09",
+    "num_days": 4,
+    "group_size": 2,
+    "budget": 1900.0,
+    "required_attractions": [
+      "a_glass_botanicals",
+      "a_court_library",
+      "a_science_dome",
+      "a_puppet_theater",
+      "a_tea_ship",
+      "a_innovation_museum",
+      "a_jazz_matinee",
+      "a_freedom_steps",
+      "a_college_yard",
+      "a_ballpark_tour",
+      "a_glass_church",
+      "a_harborfront_art"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "North End",
+      "South End"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_northgate",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_glass_botanicals",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_science_dome",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_court_library",
+        "start": "18:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_tea_ship",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_innovation_museum",
+        "start": "11:55",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "r_quill_cafe",
+        "start": "13:55",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_puppet_theater",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_freedom_steps",
+        "start": "09:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "a_college_yard",
+        "start": "12:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "a_ballpark_tour",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_harborfront_art",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "a_glass_church",
+        "start": "14:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

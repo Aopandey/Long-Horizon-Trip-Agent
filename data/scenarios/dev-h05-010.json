@@ -1,0 +1,67 @@
+{
+  "id": "dev-h05-010",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-06-10 (Wednesday), group of 2, 3 required attractions, lunch and dinner each day, hotel in Fenway or South End.",
+  "constraints": {
+    "start_date": "2026-06-10",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 400.0,
+    "required_attractions": [
+      "a_mint_vault",
+      "a_river_kayak",
+      "a_swan_boats"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Fenway",
+      "South End"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_mint_vault",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_square_deli",
+        "start": "11:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_river_kayak",
+        "start": "12:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_swan_boats",
+        "start": "14:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}
