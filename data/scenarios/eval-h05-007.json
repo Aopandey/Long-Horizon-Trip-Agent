@@ -1,0 +1,64 @@
+{
+  "id": "eval-h05-007",
+  "split": "eval",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-06-17 (Wednesday), group of 2, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-17",
+    "num_days": 1,
+    "group_size": 2,
+    "budget": 430.0,
+    "required_attractions": [
+      "a_venetian_court",
+      "a_fine_arts",
+      "a_gaslight_walk"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_venetian_court",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "13:20",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_fine_arts",
+        "start": "14:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_gaslight_walk",
+        "start": "17:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "19:05",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

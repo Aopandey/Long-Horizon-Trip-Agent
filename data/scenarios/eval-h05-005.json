@@ -1,0 +1,67 @@
+{
+  "id": "eval-h05-005",
+  "split": "eval",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-06-04 (Thursday), group of 1, 3 required attractions, lunch and dinner each day, hotel in Cambridge or Seaport.",
+  "constraints": {
+    "start_date": "2026-06-04",
+    "num_days": 1,
+    "group_size": 1,
+    "budget": 305.0,
+    "required_attractions": [
+      "a_symphony_tour",
+      "a_lantern_hall",
+      "a_glass_church"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Cambridge",
+      "Seaport"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_lantern_hall",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_glass_church",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_symphony_tour",
+        "start": "13:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

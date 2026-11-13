@@ -1,0 +1,16 @@
+# Final evaluation: 40 scenarios x 2 conditions x 3 variants x 3 repeats = 720 runs.
+# Copy the frozen settings from the chosen dev config, tag the commit eval-freeze, then:
+#   trip-agent run configs/eval.yaml --allow-eval
+name: eval-final
+split: eval
+variants: [standard, verification, recovery]
+conditions: [clean, corrupted]
+repeats: 3
+seed: 0
+corruption: {rate: 0.2, seed: 0}
+budget: {base: 20, per_commitment: 5}
+policy: {hours_slack_minutes: 120, travel_slack_minutes: 20, budget_slack_fraction: 0.3, max_repairs_per_conflict: 3}
+llm: {model: qwen3.5:9b, temperature: 0.6, num_ctx: 32768, num_predict: 2048, think: false}
+max_turns: 200
+concurrency: 1
+storage: {backend: supabase, dataset: main}

@@ -1,0 +1,187 @@
+{
+  "id": "eval-h20-008",
+  "split": "eval",
+  "horizon": 20,
+  "description": "4 day(s) from 2026-08-03 (Monday), group of 1, 12 required attractions, lunch and dinner each day, hotel in Back Bay or Cambridge.",
+  "constraints": {
+    "start_date": "2026-08-03",
+    "num_days": 4,
+    "group_size": 1,
+    "budget": 1195.0,
+    "required_attractions": [
+      "a_crystal_globe",
+      "a_harborwalk",
+      "a_fine_arts",
+      "a_glass_botanicals",
+      "a_hillside_burial",
+      "a_college_yard",
+      "a_city_carillon",
+      "a_common_gardens",
+      "a_union_squares",
+      "a_venetian_court",
+      "a_glass_church",
+      "a_river_kayak"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Back Bay",
+      "Cambridge"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_riverbank",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_harborwalk",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_fine_arts",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_glass_botanicals",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_college_yard",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_hillside_burial",
+        "start": "14:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_city_carillon",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "r_brick_oven",
+        "start": "13:25",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "a_union_squares",
+        "start": "14:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "a_common_gardens",
+        "start": "18:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "a_river_kayak",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "r_fens_noodle",
+        "start": "12:05",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_venetian_court",
+        "start": "13:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "a_glass_church",
+        "start": "15:15",
+        "kind": "visit"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "id": "dev-h20-009",
+  "split": "dev",
+  "horizon": 20,
+  "description": "4 day(s) from 2026-07-06 (Monday), group of 2, 12 required attractions, lunch and dinner each day, hotel in North End or Seaport.",
+  "constraints": {
+    "start_date": "2026-07-06",
+    "num_days": 4,
+    "group_size": 2,
+    "budget": 1745.0,
+    "required_attractions": [
+      "a_glass_botanicals",
+      "a_lantern_hall",
+      "a_swan_boats",
+      "a_ballpark_tour",
+      "a_harborfront_art",
+      "a_copper_steeple",
+      "a_crystal_globe",
+      "a_hilltop_athenaeum",
+      "a_harbor_aquarium",
+      "a_city_carillon",
+      "a_union_squares",
+      "a_hillside_burial"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "North End",
+      "Seaport"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_northgate",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_glass_botanicals",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_lantern_hall",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_swan_boats",
+        "start": "13:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_copper_steeple",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_ballpark_tour",
+        "start": "10:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_harborfront_art",
+        "start": "12:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "14:15",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_union_cantina",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "a_hilltop_athenaeum",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "a_harbor_aquarium",
+        "start": "13:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "a_hillside_burial",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_city_carillon",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "a_union_squares",
+        "start": "18:40",
+        "kind": "visit"
+      }
+    ]
+  }
+}

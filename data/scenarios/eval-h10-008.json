@@ -1,0 +1,104 @@
+{
+  "id": "eval-h10-008",
+  "split": "eval",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-08-15 (Saturday), group of 2, 6 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-08-15",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 870.0,
+    "required_attractions": [
+      "a_jazz_matinee",
+      "a_brickyard_market",
+      "a_harbor_aquarium",
+      "a_mint_vault",
+      "a_skyview_deck",
+      "a_science_dome"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_harbor_aquarium",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:55",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_brickyard_market",
+        "start": "12:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_mint_vault",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_square_deli",
+        "start": "11:45",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_science_dome",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "a_skyview_deck",
+        "start": "18:25",
+        "kind": "visit"
+      }
+    ]
+  }
+}

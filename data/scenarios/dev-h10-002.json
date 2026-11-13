@@ -1,0 +1,104 @@
+{
+  "id": "dev-h10-002",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-06-03 (Wednesday), group of 2, 6 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-03",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 775.0,
+    "required_attractions": [
+      "a_ballpark_tour",
+      "a_copper_steeple",
+      "a_wharf_gardens",
+      "a_glass_botanicals",
+      "a_swan_boats",
+      "a_union_squares"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_northgate",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_ballpark_tour",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_prince_pastry",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_copper_steeple",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_wharf_gardens",
+        "start": "18:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_glass_botanicals",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "11:35",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_union_squares",
+        "start": "12:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_swan_boats",
+        "start": "13:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "dev-h05-008",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-06-23 (Tuesday), group of 1, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-23",
+    "num_days": 1,
+    "group_size": 1,
+    "budget": 265.0,
+    "required_attractions": [
+      "a_symphony_tour",
+      "a_harborwalk",
+      "a_ink_gallery"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_symphony_tour",
+        "start": "12:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "13:50",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_ink_gallery",
+        "start": "14:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_harborwalk",
+        "start": "18:45",
+        "kind": "visit"
+      }
+    ]
+  }
+}

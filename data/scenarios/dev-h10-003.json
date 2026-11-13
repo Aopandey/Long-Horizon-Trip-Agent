@@ -1,0 +1,107 @@
+{
+  "id": "dev-h10-003",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-06-11 (Thursday), group of 2, 6 required attractions, lunch and dinner each day, hotel in Cambridge or Fenway.",
+  "constraints": {
+    "start_date": "2026-06-11",
+    "num_days": 2,
+    "group_size": 2,
+    "budget": 685.0,
+    "required_attractions": [
+      "a_crystal_globe",
+      "a_union_squares",
+      "a_common_gardens",
+      "a_city_carillon",
+      "a_innovation_museum",
+      "a_fens_garden"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Cambridge",
+      "Fenway"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_union_squares",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "a_common_gardens",
+        "start": "18:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_fens_garden",
+        "start": "09:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_city_carillon",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "r_square_deli",
+        "start": "13:35",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_innovation_museum",
+        "start": "14:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

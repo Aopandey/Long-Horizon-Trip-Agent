@@ -1,0 +1,104 @@
+{
+  "id": "dev-h10-008",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-06-29 (Monday), group of 3, 6 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-29",
+    "num_days": 2,
+    "group_size": 3,
+    "budget": 1060.0,
+    "required_attractions": [
+      "a_crystal_globe",
+      "a_hillside_burial",
+      "a_fine_arts",
+      "a_jazz_matinee",
+      "a_court_library",
+      "a_harborwalk"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_crystal_globe",
+        "start": "10:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_acorn_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_hillside_burial",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_fine_arts",
+        "start": "13:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "r_brick_oven",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "a_jazz_matinee",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_court_library",
+        "start": "17:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "r_dockside_tacos",
+        "start": "18:50",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "a_harborwalk",
+        "start": "19:50",
+        "kind": "visit"
+      }
+    ]
+  }
+}

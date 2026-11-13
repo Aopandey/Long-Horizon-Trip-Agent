@@ -1,0 +1,86 @@
+{
+  "id": "example-h5-monday",
+  "split": "dev",
+  "horizon": 5,
+  "description": "One day, three required attractions, lunch and dinner (example only).",
+  "constraints": {
+    "start_date": "2026-06-01",
+    "num_days": 1,
+    "nights": null,
+    "group_size": 2,
+    "budget": 500.0,
+    "day_start": "09:00",
+    "day_end": "22:00",
+    "required_attractions": [
+      "a_liberty_walk",
+      "a_aquarium",
+      "a_art_museum"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "meal_windows": {
+      "breakfast": {
+        "start": "07:00",
+        "end": "10:00"
+      },
+      "lunch": {
+        "start": "11:30",
+        "end": "14:30"
+      },
+      "dinner": {
+        "start": "17:30",
+        "end": "21:30"
+      }
+    },
+    "hotel_neighborhoods": null,
+    "max_tool_calls": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_copley",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_liberty_walk",
+        "kind": "visit",
+        "meal_type": null,
+        "start": "09:30"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_hanover",
+        "kind": "meal",
+        "meal_type": "lunch",
+        "start": "11:30"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_aquarium",
+        "kind": "visit",
+        "meal_type": null,
+        "start": "13:00"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_art_museum",
+        "kind": "visit",
+        "meal_type": null,
+        "start": "15:00"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_pier",
+        "kind": "meal",
+        "meal_type": "dinner",
+        "start": "18:00"
+      }
+    ]
+  },
+  "notes": ""
+}

@@ -1,0 +1,64 @@
+{
+  "id": "dev-h05-002",
+  "split": "dev",
+  "horizon": 5,
+  "description": "1 day(s) from 2026-07-24 (Friday), group of 3, 3 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-07-24",
+    "num_days": 1,
+    "group_size": 3,
+    "budget": 710.0,
+    "required_attractions": [
+      "a_symphony_tour",
+      "a_skyview_deck",
+      "a_innovation_museum"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_fenway_lodge",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_symphony_tour",
+        "start": "12:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_square_deli",
+        "start": "14:05",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_innovation_museum",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_skyview_deck",
+        "start": "17:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_fens_noodle",
+        "start": "18:35",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

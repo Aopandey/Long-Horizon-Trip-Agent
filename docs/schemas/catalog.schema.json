@@ -1,0 +1,397 @@
+{
+  "$defs": {
+    "Attraction": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "neighborhood": {
+          "title": "Neighborhood",
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "lat": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat"
+        },
+        "lon": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon"
+        },
+        "kind": {
+          "const": "attraction",
+          "default": "attraction",
+          "title": "Kind",
+          "type": "string"
+        },
+        "hours": {
+          "$ref": "#/$defs/OpeningHours"
+        },
+        "visit_minutes": {
+          "exclusiveMinimum": 0,
+          "title": "Visit Minutes",
+          "type": "integer"
+        },
+        "price_per_person": {
+          "minimum": 0,
+          "title": "Price Per Person",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "neighborhood",
+        "hours",
+        "visit_minutes",
+        "price_per_person"
+      ],
+      "title": "Attraction",
+      "type": "object"
+    },
+    "Hotel": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "neighborhood": {
+          "title": "Neighborhood",
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "lat": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat"
+        },
+        "lon": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon"
+        },
+        "kind": {
+          "const": "hotel",
+          "default": "hotel",
+          "title": "Kind",
+          "type": "string"
+        },
+        "price_per_night": {
+          "description": "Per room, per night",
+          "minimum": 0,
+          "title": "Price Per Night",
+          "type": "number"
+        },
+        "max_guests_per_room": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Max Guests Per Room",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "neighborhood",
+        "price_per_night"
+      ],
+      "title": "Hotel",
+      "type": "object"
+    },
+    "MealType": {
+      "enum": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "title": "MealType",
+      "type": "string"
+    },
+    "OpeningHours": {
+      "additionalProperties": false,
+      "properties": {
+        "open": {
+          "examples": [
+            "09:30"
+          ],
+          "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$",
+          "title": "Open",
+          "type": "string"
+        },
+        "close": {
+          "examples": [
+            "09:30"
+          ],
+          "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$",
+          "title": "Close",
+          "type": "string"
+        },
+        "closed_weekdays": {
+          "description": "0 = Monday ... 6 = Sunday",
+          "items": {
+            "maximum": 6,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Closed Weekdays",
+          "type": "array"
+        }
+      },
+      "required": [
+        "open",
+        "close"
+      ],
+      "title": "OpeningHours",
+      "type": "object"
+    },
+    "Restaurant": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "neighborhood": {
+          "title": "Neighborhood",
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "lat": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat"
+        },
+        "lon": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon"
+        },
+        "kind": {
+          "const": "restaurant",
+          "default": "restaurant",
+          "title": "Kind",
+          "type": "string"
+        },
+        "hours": {
+          "$ref": "#/$defs/OpeningHours"
+        },
+        "meals": {
+          "items": {
+            "$ref": "#/$defs/MealType"
+          },
+          "minItems": 1,
+          "title": "Meals",
+          "type": "array"
+        },
+        "meal_minutes": {
+          "default": 60,
+          "exclusiveMinimum": 0,
+          "title": "Meal Minutes",
+          "type": "integer"
+        },
+        "price_per_person": {
+          "minimum": 0,
+          "title": "Price Per Person",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "neighborhood",
+        "hours",
+        "meals",
+        "price_per_person"
+      ],
+      "title": "Restaurant",
+      "type": "object"
+    },
+    "TravelLeg": {
+      "additionalProperties": false,
+      "properties": {
+        "from_id": {
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+          "title": "From Id",
+          "type": "string"
+        },
+        "to_id": {
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9_\\-]*$",
+          "title": "To Id",
+          "type": "string"
+        },
+        "minutes": {
+          "minimum": 0,
+          "title": "Minutes",
+          "type": "integer"
+        },
+        "cost_per_person": {
+          "default": 0.0,
+          "minimum": 0,
+          "title": "Cost Per Person",
+          "type": "number"
+        }
+      },
+      "required": [
+        "from_id",
+        "to_id",
+        "minutes"
+      ],
+      "title": "TravelLeg",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The trusted environment. Only the tool layer and the evaluator read it directly.",
+  "properties": {
+    "version": {
+      "default": "1",
+      "title": "Version",
+      "type": "string"
+    },
+    "city": {
+      "default": "Boston",
+      "title": "City",
+      "type": "string"
+    },
+    "synthetic": {
+      "const": true,
+      "default": true,
+      "description": "All data must be synthetic",
+      "title": "Synthetic",
+      "type": "boolean"
+    },
+    "attractions": {
+      "items": {
+        "$ref": "#/$defs/Attraction"
+      },
+      "title": "Attractions",
+      "type": "array"
+    },
+    "restaurants": {
+      "items": {
+        "$ref": "#/$defs/Restaurant"
+      },
+      "title": "Restaurants",
+      "type": "array"
+    },
+    "hotels": {
+      "items": {
+        "$ref": "#/$defs/Hotel"
+      },
+      "title": "Hotels",
+      "type": "array"
+    },
+    "travel": {
+      "items": {
+        "$ref": "#/$defs/TravelLeg"
+      },
+      "title": "Travel",
+      "type": "array"
+    },
+    "symmetric_travel": {
+      "default": true,
+      "description": "If a->b is missing, use b->a (the same fact, same key)",
+      "title": "Symmetric Travel",
+      "type": "boolean"
+    },
+    "same_place_minutes": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Same Place Minutes",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "attractions",
+    "restaurants",
+    "hotels",
+    "travel"
+  ],
+  "title": "Catalog",
+  "type": "object"
+}

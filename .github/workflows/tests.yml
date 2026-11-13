@@ -1,0 +1,50 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Pinned so a new ruff release cannot change the formatting rules under us.
+      - run: pip install ruff==0.17.4
+      - run: ruff check trip_agent tests
+      - run: ruff format --check trip_agent tests
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: pip install -e ".[dev,supabase]"
+      # Tests marked `ollama` need a live model server, so CI skips them.
+      - run: pytest -m "not ollama" -q
+      - name: Example dataset is valid and matches the generator
+        run: |
+          trip-agent validate examples/tiny
+          trip-agent example-data /tmp/tiny
+          diff -r examples/tiny /tmp/tiny
+          trip-agent schema --out /tmp/schemas
+          diff -r docs/schemas /tmp/schemas

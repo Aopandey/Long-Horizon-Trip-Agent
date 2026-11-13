@@ -1,0 +1,184 @@
+{
+  "id": "eval-h20-001",
+  "split": "eval",
+  "horizon": 20,
+  "description": "4 day(s) from 2026-06-27 (Saturday), group of 4, 12 required attractions, lunch and dinner each day.",
+  "constraints": {
+    "start_date": "2026-06-27",
+    "num_days": 4,
+    "group_size": 4,
+    "budget": 2960.0,
+    "required_attractions": [
+      "a_venetian_court",
+      "a_wharf_gardens",
+      "a_hillside_burial",
+      "a_glass_botanicals",
+      "a_skyview_deck",
+      "a_lantern_hall",
+      "a_city_carillon",
+      "a_science_dome",
+      "a_harborwalk",
+      "a_harbor_cruise",
+      "a_tea_ship",
+      "a_copper_steeple"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": null
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_venetian_court",
+        "start": "11:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "r_prince_pastry",
+        "start": "13:35",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "a_wharf_gardens",
+        "start": "14:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_hillside_burial",
+        "start": "15:45",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_glass_botanicals",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_quill_cafe",
+        "start": "11:35",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_lantern_hall",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "a_skyview_deck",
+        "start": "18:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref11",
+        "day": 2,
+        "place_id": "r_quill_cafe",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref12",
+        "day": 2,
+        "place_id": "a_city_carillon",
+        "start": "12:25",
+        "kind": "visit"
+      },
+      {
+        "id": "ref13",
+        "day": 2,
+        "place_id": "a_science_dome",
+        "start": "15:00",
+        "kind": "visit"
+      },
+      {
+        "id": "ref14",
+        "day": 2,
+        "place_id": "r_market_chowder",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref15",
+        "day": 2,
+        "place_id": "a_harborwalk",
+        "start": "18:50",
+        "kind": "visit"
+      },
+      {
+        "id": "ref16",
+        "day": 3,
+        "place_id": "a_copper_steeple",
+        "start": "09:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref17",
+        "day": 3,
+        "place_id": "r_dockside_tacos",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref18",
+        "day": 3,
+        "place_id": "a_harbor_cruise",
+        "start": "12:30",
+        "kind": "visit"
+      },
+      {
+        "id": "ref19",
+        "day": 3,
+        "place_id": "a_tea_ship",
+        "start": "14:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref20",
+        "day": 3,
+        "place_id": "r_dockside_tacos",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}

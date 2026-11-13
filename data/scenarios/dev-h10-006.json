@@ -1,0 +1,107 @@
+{
+  "id": "dev-h10-006",
+  "split": "dev",
+  "horizon": 10,
+  "description": "2 day(s) from 2026-06-08 (Monday), group of 1, 6 required attractions, lunch and dinner each day, hotel in Seaport or South End.",
+  "constraints": {
+    "start_date": "2026-06-08",
+    "num_days": 2,
+    "group_size": 1,
+    "budget": 765.0,
+    "required_attractions": [
+      "a_ballpark_tour",
+      "a_copper_steeple",
+      "a_science_dome",
+      "a_glass_botanicals",
+      "a_golden_dome",
+      "a_fens_garden"
+    ],
+    "meals_per_day": [
+      "lunch",
+      "dinner"
+    ],
+    "hotel_neighborhoods": [
+      "Seaport",
+      "South End"
+    ]
+  },
+  "reference_itinerary": {
+    "hotel_id": "h_southend_suites",
+    "items": [
+      {
+        "id": "ref1",
+        "day": 0,
+        "place_id": "a_ballpark_tour",
+        "start": "09:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref2",
+        "day": 0,
+        "place_id": "a_copper_steeple",
+        "start": "11:10",
+        "kind": "visit"
+      },
+      {
+        "id": "ref3",
+        "day": 0,
+        "place_id": "r_square_deli",
+        "start": "12:25",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref4",
+        "day": 0,
+        "place_id": "a_science_dome",
+        "start": "13:20",
+        "kind": "visit"
+      },
+      {
+        "id": "ref5",
+        "day": 0,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      },
+      {
+        "id": "ref6",
+        "day": 1,
+        "place_id": "a_glass_botanicals",
+        "start": "09:35",
+        "kind": "visit"
+      },
+      {
+        "id": "ref7",
+        "day": 1,
+        "place_id": "r_square_deli",
+        "start": "11:30",
+        "kind": "meal",
+        "meal_type": "lunch"
+      },
+      {
+        "id": "ref8",
+        "day": 1,
+        "place_id": "a_golden_dome",
+        "start": "12:40",
+        "kind": "visit"
+      },
+      {
+        "id": "ref9",
+        "day": 1,
+        "place_id": "a_fens_garden",
+        "start": "14:05",
+        "kind": "visit"
+      },
+      {
+        "id": "ref10",
+        "day": 1,
+        "place_id": "r_copley_diner",
+        "start": "17:30",
+        "kind": "meal",
+        "meal_type": "dinner"
+      }
+    ]
+  }
+}
