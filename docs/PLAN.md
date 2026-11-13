@@ -1,6 +1,6 @@
 # Implementation and tuning plan
 
-**Status:** The core implementation is built (see the README for setup). The synthetic dataset is supplied by the team in the format in [DATA_FORMAT.md](DATA_FORMAT.md). Open items are listed at the end.
+**Status:** The core implementation, the dataset and Supabase are done; dev tuning has started. Teammate setup is in [INSTRUCTIONS.md](../INSTRUCTIONS.md), the data format in [DATA_FORMAT.md](DATA_FORMAT.md). Open items are listed at the end.
 
 ## Context
 
@@ -92,10 +92,10 @@ Computed by `eval/evaluator.py` after a run, from the stored record:
 
 0. **Setup (done).** Package, CLI, lint, tests, configs, Supabase schema.
 1. **Core system (done).** Data model, corruption, checker, tools, agent loop, three variants, evaluator, stats, storage, runner.
-2. **Dataset (next, from the team).** Build dev and eval scenarios in the documented format; `validate` must pass.
-3. **Supabase.** Create the project, apply the migration, `import-data`.
-4. **Model.** Pull `qwen3.5:9b` where it will run; run `check-llm` and `smoke`.
-5. **Dev tuning.** Iterate on `configs/dev.yaml` until the sanity targets hold.
+2. **Dataset (done).** 80 scenarios (40 dev, 40 eval) in `data/`, rebuilt by `scripts/generate_synthetic_data.py`; `validate` passes, hash `f3270941decf0d9a`.
+3. **Supabase (done).** Schema applied, dataset imported as `main`, round trip verified (same hash from files and from Supabase).
+4. **Model (in progress).** `qwen3.5:9b` works on a Mac (9 GB of memory, about 12 minutes per 1-day run); teammates' GPUs are being checked with `check-llm` and `smoke`.
+5. **Dev tuning (next).** Each teammate runs a named config (for example `dev-archer-v1`) against Supabase; iterate until the sanity targets hold.
 6. **Freeze and evaluate.** Tag, run the 720 eval runs once.
 7. **Analysis and report.** Tables and plots by horizon and condition; error-propagation case studies from the event logs.
 

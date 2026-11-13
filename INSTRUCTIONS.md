@@ -32,17 +32,17 @@ ollama pull qwen3.5:9b
 
 ## 2. Get the code
 
-The dataset (80 scenarios) is already in Supabase, so you only need the code.
+The repo has the code and the 80 scenarios. Your runs read the scenarios from Supabase, which holds the same data.
 
 ```bash
-git clone -b feat/core-implementation https://github.com/Aopandey/Long-Horizon-Trip-Agent.git
+git clone https://github.com/Aopandey/Long-Horizon-Trip-Agent.git
 cd Long-Horizon-Trip-Agent
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev,supabase]"
 ```
 
-Once the pull requests are merged, clone `main` instead.
+If you already cloned the older `feat/core-implementation` branch, switch to `main` with `git switch main && git pull`. Nothing else changes.
 
 ## 3. Add your keys
 

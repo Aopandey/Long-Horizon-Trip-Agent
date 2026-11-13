@@ -2,7 +2,7 @@
 
 A CS 5130 research project on AI planning reliability under dependent constraints and deliberately inaccurate tool responses.
 
-**Status:** Core implementation built: environment, misinformation layer, checker, tools, three agent variants, evaluator, Supabase storage and experiment runner. Next: the team's synthetic dataset, then dev tuning. See [docs/PLAN.md](docs/PLAN.md).
+**Status:** The core implementation, CI and Supabase storage are built. The synthetic dataset (80 scenarios in `data/`) is validated and loaded into Supabase. Now: dev tuning, with teammates running the model on their GPUs ([INSTRUCTIONS.md](INSTRUCTIONS.md)). See [docs/PLAN.md](docs/PLAN.md).
 
 ## Project proposal
 
