@@ -1,0 +1,17 @@
+# Dev tuning: data from Supabase, results saved to Supabase.
+name: dev-avinash-v1        # must be unique in the team database: put your name in it
+split: dev
+horizons: [5]            # start with the 1-day scenarios
+variants: [standard, verification, recovery]
+conditions: [clean, corrupted]
+repeats: 1
+corruption: {rate: 0.2, seed: 0}
+budget: {base: 20, per_commitment: 5}
+llm:
+  model: qwen3.5:9b
+  temperature: 0.6
+  num_ctx: 32768
+  think: false
+max_turns: 200
+concurrency: 1
+storage: {backend: supabase, dataset: main}
