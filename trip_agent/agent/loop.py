@@ -1,11 +1,13 @@
 """One planning episode: the model acts through tools until it finishes or runs out of budget.
 
-The message history is append-only in every variant: nothing already sent is edited or removed.
+Context management (the same for every variant): tool results are sent as compact text, and only
+the most recent turns are kept in full. Older turns keep the tool calls the model made, drop its
+narration, and shrink each tool result to one line. Turns are shortened in blocks, so the start of
+the prompt stays stable between blocks and the model server can reuse its cache.
 """
 
 from __future__ import annotations
 
-import json
 import time
 from dataclasses import dataclass, field
 
@@ -14,6 +16,7 @@ from trip_agent.agent.policies import StandardPolicy
 from trip_agent.agent.prompts import NUDGE
 from trip_agent.env.models import Itinerary
 from trip_agent.tools.environment import TOOL_SPECS, TripEnvironment
+from trip_agent.tools.render import brief, render
 
 
 @dataclass
@@ -22,6 +25,17 @@ class EpisodeLimits:
     max_idle_turns: int = 2
     context_limit: int | None = None
     keep_thinking_in_history: bool = False
+    recent_turns: int | None = 6  # turns kept in full; None keeps the whole history in full
+
+
+@dataclass
+class _Turn:
+    full: list[dict] = field(default_factory=list)
+    brief: list[dict] = field(default_factory=list)
+
+    def add(self, full: dict, short: dict | None = None) -> None:
+        self.full.append(full)
+        self.brief.append(short if short is not None else full)
 
 
 @dataclass
@@ -52,10 +66,19 @@ def run_episode(
 ) -> EpisodeResult:
     limits = limits or EpisodeLimits()
     started = time.perf_counter()
-    messages: list[dict] = [
+    head: list[dict] = [
         {"role": "system", "content": policy.system_prompt()},
         {"role": "user", "content": env.task_brief()},
     ]
+    history: list[_Turn] = []
+    shortened = 0  # history[:shortened] is sent in brief form
+
+    def prompt() -> list[dict]:
+        messages = list(head)
+        for i, turn in enumerate(history):
+            messages += turn.brief if i < shortened else turn.full
+        return messages
+
     turns = idle = malformed = prompt_tokens = completion_tokens = 0
     llm_ms = 0.0
 
@@ -64,7 +87,10 @@ def run_episode(
             env._stop("max_turns")
             break
         turns += 1
-        response = llm.chat(messages, TOOL_SPECS, seed=seed)
+        window = limits.recent_turns
+        if window and len(history) - shortened >= 2 * window:
+            shortened = len(history) - window
+        response = llm.chat(prompt(), TOOL_SPECS, seed=seed)
         prompt_tokens += response.prompt_tokens
         completion_tokens += response.completion_tokens
         llm_ms += response.latency_ms
@@ -85,14 +111,17 @@ def run_episode(
         )
         if limits.context_limit and response.prompt_tokens > 0.9 * limits.context_limit:
             env.events.append({"type": "context_near_limit", "turn": turns, "prompt_tokens": response.prompt_tokens})
-        messages.append(response.assistant_message(limits.keep_thinking_in_history))
+        turn = _Turn()
+        history.append(turn)
+        assistant = response.assistant_message(limits.keep_thinking_in_history)
+        turn.add(assistant, {k: v for k, v in assistant.items() if k != "thinking"} | {"content": ""})
 
         if not response.tool_calls:
             idle += 1
             if idle > limits.max_idle_turns:
                 env._stop("no_tool_calls")
                 break
-            messages.append({"role": "user", "content": NUDGE})
+            turn.add({"role": "user", "content": NUDGE})
             continue
         idle = 0
 
@@ -105,10 +134,10 @@ def run_episode(
             if call.parse_error:
                 result["warning"] = call.parse_error
             note = policy.after_tool(env, call.name, call.arguments, result)
-            content = json.dumps(result, default=str)
-            if note:
-                content += "\n" + note
-            messages.append({"role": "tool", "tool_name": call.name, "content": content})
+            turn.add(
+                {"role": "tool", "tool_name": call.name, "content": render(call.name, result, note)},
+                {"role": "tool", "tool_name": call.name, "content": brief(call.name, result)},
+            )
 
     policy.finalize(env)
     return EpisodeResult(
@@ -125,5 +154,5 @@ def run_episode(
         finish_notes=env.finish_notes,
         unresolved=env.unresolved,
         events=env.events,
-        messages=messages,
+        messages=head + [m for turn in history for m in turn.full],
     )

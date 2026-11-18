@@ -37,11 +37,51 @@ def test_reference_script_finishes_in_every_variant(catalog, monday):
         assert env.last_check is not None and not env.last_check.valid
 
 
-def test_history_is_append_only(catalog, monday):
+def test_without_a_window_the_history_is_append_only(catalog, monday):
     llm = ScriptedClient(reference_script(monday))
-    run_episode(_env(catalog, monday), make_policy("recovery"), llm)
+    run_episode(_env(catalog, monday), make_policy("recovery"), llm, EpisodeLimits(recent_turns=None))
     for earlier, later in zip(llm.requests, llm.requests[1:], strict=False):
         assert later[: len(earlier)] == earlier
+
+
+def test_history_window_shortens_old_turns_in_blocks(catalog, monday):
+    turns = [[call("search_places", kind="attraction", limit=10)] for _ in range(20)] + [[call("finish")]]
+    llm = ScriptedClient(turns)
+    env = _env(catalog, monday, limit=100)
+    run_episode(env, make_policy("standard"), llm, EpisodeLimits(recent_turns=3))
+    head = llm.requests[0][:2]
+    for request in llm.requests:
+        assert request[:2] == head  # system prompt and task never change
+        tool_msgs = [m for m in request if m["role"] == "tool"]
+        full = [m for m in tool_msgs if not m["content"].startswith("[old]")]
+        assert len(full) < 6  # at most 2 x window in full
+        assert all(m["content"].startswith("[old] search:") for m in tool_msgs[: len(tool_msgs) - len(full)])
+    # Between shortening steps the prompt only grows at the end, so the server can reuse its cache.
+    extensions = sum(
+        later[: len(earlier)] == earlier for earlier, later in zip(llm.requests, llm.requests[1:], strict=False)
+    )
+    assert extensions >= len(llm.requests) * 0.6
+    last = llm.requests[-1]
+    windowed = sum(len(m.get("content", "")) for m in last)
+    unwindowed_llm = ScriptedClient(turns)
+    run_episode(
+        _env(catalog, monday, limit=100), make_policy("standard"), unwindowed_llm, EpisodeLimits(recent_turns=None)
+    )
+    assert windowed < 0.5 * sum(len(m.get("content", "")) for m in unwindowed_llm.requests[-1])
+
+
+def test_old_assistant_text_is_dropped_but_tool_calls_stay(catalog, monday):
+    class Talkative(ScriptedClient):
+        def chat(self, messages, tools, *, seed=None):
+            response = super().chat(messages, tools, seed=seed)
+            response.content = "Let me think about this at length. " * 20
+            return response
+
+    llm = Talkative([[call("view_itinerary")] for _ in range(10)] + [[call("finish")]])
+    run_episode(_env(catalog, monday, limit=100), make_policy("standard"), llm, EpisodeLimits(recent_turns=2))
+    assistants = [m for m in llm.requests[-1] if m["role"] == "assistant"]
+    assert assistants[0]["content"] == "" and assistants[0]["tool_calls"][0]["function"]["name"] == "view_itinerary"
+    assert assistants[-1]["content"].startswith("Let me think")
 
 
 def test_idle_model_is_nudged_then_stopped(catalog, monday):

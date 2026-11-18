@@ -90,6 +90,9 @@ class ExperimentConfig(BaseModel):
     policy: PolicySettings = Field(default_factory=PolicySettings)
     llm: LLMConfig = Field(default_factory=LLMConfig)
     max_turns: int = 200
+    history_window: int | None = Field(
+        default=6, ge=1, description="Model turns kept in full; older ones shrink to one line. null keeps all."
+    )
     concurrency: int = Field(default=1, ge=1)
     storage: StorageConfig = Field(default_factory=StorageConfig)
 
@@ -174,6 +177,7 @@ def execute_run(spec: RunSpec, catalog: Catalog, cfg: ExperimentConfig, llm: LLM
                 max_turns=cfg.max_turns,
                 context_limit=cfg.llm.num_ctx,
                 keep_thinking_in_history=cfg.llm.keep_thinking_in_history,
+                recent_turns=cfg.history_window,
             ),
             seed=spec.seed,
         )
