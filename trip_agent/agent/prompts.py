@@ -11,6 +11,8 @@ How to work:
 - Respect opening hours, closed weekdays, meal time windows, and the total budget.
 - Call check_itinerary before finish and fix what it reports.
 - Your tool-call budget is limited. Plan efficiently.
+- Before a tool call, write at most one short sentence. Do not repeat tool results or restate the whole plan.
+- Older tool results are shortened to one line. Call view_itinerary, or search again, when you need details.
 - If something cannot be satisfied, call finish and list it in `unresolved`."""
 
 VERIFICATION = """

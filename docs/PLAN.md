@@ -49,7 +49,7 @@ Design rules:
    - Standard: base prompt, nothing added.
    - Verification: adds a verification policy and flags unverified facts that a new commitment relies on with little slack.
    - Recovery: the same, plus targeted repair. When a corrected fact or a failed check breaks items, it checkpoints, removes only the broken items, names the later same-day items that depend on them, and caps repairs at 3 per conflict. At the end it submits the best checked checkpoint if planning ended in a worse state.
-8. **Append-only history.** Nothing already sent to the model is edited. Repairs change the scaffold state and are reported in the tool result. All three variants use the same mechanism.
+8. **Bounded context.** Tool results reach the model as compact text, not JSON. Only the last 6 model turns are kept in full (`history_window` in the config); older turns keep the tool calls the model made, drop its narration, and shrink each result to one line. Turns are shortened in blocks so the model server can reuse its prompt cache. Without this, the prompt grew about 390 tokens per tool call and 4- and 6-day trips would overflow a 32K context. Repairs change the scaffold state and are reported in the tool result. All three variants use the same mechanism.
 9. **Equal help for everyone.** Search matching by word, hints on empty results, and notices on repeated identical lookups live in the tool layer, so every variant gets them.
 10. **Everything is logged.** Each run stores every LLM turn (tokens, latency, thinking text), every tool call and result, the commitment history with the facts each commitment relied on, and the corruption plan.
 
@@ -76,7 +76,7 @@ Computed by `eval/evaluator.py` after a run, from the stored record:
 ## Model notes (Qwen3.5 9B on Ollama)
 
 - `qwen3.5:9b` is a 7.6 GB download (9.7B parameters, NVFP4 weights, with a vision projector). On a Mac it used 9.0 GB of GPU memory at a 32K context. Pull it once with `ollama pull qwen3.5:9b`; `trip-agent check-llm` confirms it is available and supports tools.
-- **Context:** Ollama's default context window is small. The config sets `num_ctx: 32768`. Long horizons resend a growing history every turn, so watch for `context_near_limit` events and raise `num_ctx` if they appear.
+- **Context:** Ollama's default context window is small; the config sets `num_ctx: 32768`. With the bounded context (design rule 8), replaying the first 26 dev runs cut the largest prompt from 28K to about 14K tokens, and a 6-day trip is projected at about 21K tokens with a budget of 20 + 5H, or 29K with 20 + 8H. If `context_near_limit` events appear, lower `history_window` or raise `num_ctx`.
 - **Thinking:** off by default for speed. Try `think: true` on dev; it may improve planning at a large time cost.
 - **Sampling:** temperature and per-run seeds are passed to Ollama. The seed depends on (scenario, condition, repeat) but not the variant, so variants are paired.
 - **Throughput:** runs go through one Ollama server. To run several at once, set `OLLAMA_NUM_PARALLEL` on the server and raise `concurrency` in the config.
