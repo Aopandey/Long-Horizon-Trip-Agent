@@ -1,0 +1,21 @@
+# Dev tuning, second pilot. Changes from dev-avinash-v1:
+#   budget per_commitment 5 -> 8 (H=5: 45 -> 60 tool calls), since most v1 runs ran out of calls;
+#   bounded context from PR #5 (compact tool text, history_window 6).
+# Data from Supabase, results saved to Supabase. 60 runs (10 scenarios x 2 conditions x 3 variants).
+name: dev-avinash-v2
+split: dev
+horizons: [5]
+variants: [standard, verification, recovery]
+conditions: [clean, corrupted]
+repeats: 1
+corruption: {rate: 0.2, seed: 0}
+budget: {base: 20, per_commitment: 8}
+llm:
+  model: qwen3.5:9b
+  temperature: 0.6
+  num_ctx: 32768
+  think: false
+history_window: 6
+max_turns: 200
+concurrency: 1
+storage: {backend: supabase, dataset: main}

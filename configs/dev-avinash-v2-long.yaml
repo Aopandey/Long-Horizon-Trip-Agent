@@ -1,0 +1,20 @@
+# Long-trip context check with the v2 settings: one 4-day scenario (H=20, 180 tool calls),
+# corrupted condition, all three variants = 3 runs. Every turn's prompt size is stored in
+# Supabase, so we can confirm long trips stay under the 32K context.
+name: dev-avinash-v2-long
+split: dev
+scenario_ids: [dev-h20-001]
+variants: [standard, verification, recovery]
+conditions: [corrupted]
+repeats: 1
+corruption: {rate: 0.2, seed: 0}
+budget: {base: 20, per_commitment: 8}
+llm:
+  model: qwen3.5:9b
+  temperature: 0.6
+  num_ctx: 32768
+  think: false
+history_window: 6
+max_turns: 400
+concurrency: 1
+storage: {backend: supabase, dataset: main}
