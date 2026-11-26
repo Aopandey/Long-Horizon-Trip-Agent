@@ -63,3 +63,14 @@ def test_planner_notes_and_notices_are_kept_in_full_form(catalog, monday):
     text = render("search_places", repeat, note="[planner] verify the hotel price")
     assert "Same call as step 1" in text and text.endswith("[planner] verify the hotel price")
     assert "planner" not in brief("search_places", repeat)
+
+
+def test_item_conflicts_are_shown_in_full_form_only(catalog, monday):
+    env = _env(catalog, monday)
+    env.call("search_places", {"place_ids": ["a_art_museum"]})
+    added = env.call("add_item", {"day": 0, "place_id": "a_art_museum", "start": "16:00"})
+    text = render("add_item", added)
+    assert "conflicts: " in text and "opening_hours: a_art_museum 16:00-18:00" in text
+    assert "conflict" not in brief("add_item", added)
+    fine = env.call("move_item", {"item_id": "c1", "start": "12:00"})
+    assert "conflicts: " in render("move_item", fine)

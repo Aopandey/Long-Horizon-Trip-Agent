@@ -49,6 +49,12 @@ def _item_line(i: dict) -> str:
     return f"{i.get('item_id')} day {i.get('day')} {i.get('start')}-{i.get('end')} {i.get('place_id')}{meal}"
 
 
+def _conflict_lines(result: dict) -> list[str]:
+    if "conflicts" not in result:
+        return []
+    return ["conflicts: " + (" | ".join(result["conflicts"]) or "none for this item")]
+
+
 def render(tool: str, result: dict, note: str | None = None) -> str:
     """Full text form of a tool result."""
     lines: list[str] = []
@@ -84,8 +90,10 @@ def render(tool: str, result: dict, note: str | None = None) -> str:
         lines.append(f"added {_item_line(result.get('added', {}))}")
         if result.get("depends_on_facts"):
             lines.append("relies on: " + ", ".join(result["depends_on_facts"]))
+        lines += _conflict_lines(result)
     elif tool == "move_item":
         lines.append(f"moved {_item_line(result.get('moved', {}))}")
+        lines += _conflict_lines(result)
     elif tool == "remove_item":
         lines.append(f"removed {result.get('removed')}")
     elif tool == "check_itinerary":

@@ -103,3 +103,24 @@ def test_empty_search_points_elsewhere_and_repeats_are_flagged(catalog, monday):
     assert empty["results"] == [] and "North End" in empty["note"] and "Seaport" in empty["note"]
     again = env.call("search_places", {"neighborhood": "Back Bay", "kind": "restaurant", "meal_type": "dinner"})
     assert "repeat_notice" in again and env.budget.used == 2
+
+
+def test_add_and_move_report_the_items_conflicts(catalog, monday):
+    env = _env(catalog, monday)
+    env.call("set_hotel", {"hotel_id": "h_copley"})
+    env.call("search_places", {"place_ids": ["a_art_museum"]})
+    added = env.call("add_item", {"day": 0, "place_id": "a_art_museum", "start": "16:00"})
+    assert any(c.startswith("opening_hours:") for c in added["conflicts"])  # closes 17:00, visit is 2 h
+    assert any("unknown" in c for c in added["conflicts"])  # travel times not looked up yet
+    env.call("get_travel_time", {"from_id": "h_copley", "to_id": "a_art_museum"})
+    moved = env.call("move_item", {"item_id": "c1", "start": "14:00"})
+    assert moved["conflicts"] == []
+    assert env.last_check is None  # the conflict report is not a check_itinerary call
+
+
+def test_moving_an_item_back_to_an_earlier_time_gets_a_notice(catalog, monday):
+    env = _env(catalog, monday)
+    env.call("add_item", {"day": 0, "place_id": "a_art_museum", "start": "14:00"})
+    assert "repeat_notice" not in env.call("move_item", {"item_id": "c1", "start": "14:30"})
+    back = env.call("move_item", {"item_id": "c1", "start": "14:00"})
+    assert "was already at this time (step 1)" in back["repeat_notice"]

@@ -15,7 +15,8 @@ budget:
 policy:
   hours_slack_minutes: 120
   travel_slack_minutes: 20
-  budget_slack_fraction: 0.3
+  travel_error_ratio: 1.0
+  price_error_fraction: 0.6
   max_repairs_per_conflict: 3
 llm:
   model: qwen3.5:9b

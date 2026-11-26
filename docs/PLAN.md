@@ -47,10 +47,10 @@ Design rules:
 6. **Dependencies are computed by the scaffold, not the model.** An item depends on its own hours and price and on the travel legs to its neighbors on that day. The hotel price belongs to the hotel choice. A 9B model cannot be trusted to list its own dependencies.
 7. **Variants differ only in the system prompt and in what the scaffold adds after a tool call.**
    - Standard: base prompt, nothing added.
-   - Verification: adds a verification policy and flags unverified facts that a new commitment relies on with little slack.
-   - Recovery: the same, plus targeted repair. When a corrected fact or a failed check breaks items, it checkpoints, removes only the broken items, names the later same-day items that depend on them, and caps repairs at 3 per conflict. At the end it submits the best checked checkpoint if planning ended in a worse state.
+   - Verification: build first, verify last. Nothing is flagged while the plan is being built. Once `check_itinerary` passes on the agent's beliefs, the scaffold lists the unverified facts the plan relies on with little margin, riskiest first (`risky_facts` in `agent/policies.py`): opening hours with less than `hours_slack_minutes` to spare, travel legs with less spare time than `max(travel_slack_minutes, travel_error_ratio x minutes)`, and the largest prices until the rest being `price_error_fraction` too low would still fit the budget.
+   - Recovery: the same, plus targeted repair. When `verify_fact` shows that a search result was wrong, it checkpoints, removes only the items the correct value breaks, names the later same-day items that depend on them, and caps repairs at 3 per corrected fact. Ordinary scheduling conflicts are left to the model, as in the verification variant. At the end it submits the best checked checkpoint if planning ended in a worse state.
 8. **Bounded context.** Tool results reach the model as compact text, not JSON. Only the last 6 model turns are kept in full (`history_window` in the config); older turns keep the tool calls the model made, drop its narration, and shrink each result to one line. Turns are shortened in blocks so the model server can reuse its prompt cache. Without this, the prompt grew about 390 tokens per tool call and 4- and 6-day trips would overflow a 32K context. Repairs change the scaffold state and are reported in the tool result. All three variants use the same mechanism.
-9. **Equal help for everyone.** Search matching by word, hints on empty results, and notices on repeated identical lookups live in the tool layer, so every variant gets them.
+9. **Equal help for everyone.** Search matching by word, hints on empty results, notices on repeated identical lookups, the item's conflicts reported by `add_item` and `move_item` (believed facts only), and a notice when an item is moved back to a time it already had all live in the tool layer, so every variant gets them.
 10. **Everything is logged.** Each run stores every LLM turn (tokens, latency, thinking text), every tool call and result, the commitment history with the facts each commitment relied on, and the corruption plan.
 
 ## Metrics
@@ -94,10 +94,20 @@ Computed by `eval/evaluator.py` after a run, from the stored record:
 1. **Core system (done).** Data model, corruption, checker, tools, agent loop, three variants, evaluator, stats, storage, runner.
 2. **Dataset (done).** 80 scenarios (40 dev, 40 eval) in `data/`, rebuilt by `scripts/generate_synthetic_data.py`; `validate` passes, hash `f3270941decf0d9a`.
 3. **Supabase (done).** Schema applied, dataset imported as `main`, round trip verified (same hash from files and from Supabase).
-4. **Model (in progress).** `qwen3.5:9b` works on a Mac (9 GB of memory, about 12 minutes per 1-day run); teammates' GPUs are being checked with `check-llm` and `smoke`.
-5. **Dev tuning (next).** Each teammate runs a named config (for example `dev-archer-v1`) against Supabase; iterate until the sanity targets hold.
+4. **Model (done).** `qwen3.5:9b` runs on a Mac (9 GB of memory, about 12 minutes per 1-day run) and on a teammate's RTX 3080 (about 2 minutes per 1-day run).
+5. **Dev tuning (in progress).** Named configs run against Supabase; see the tuning log below. Iterate until the sanity targets hold.
 6. **Freeze and evaluate.** Tag, run the 720 eval runs once.
 7. **Analysis and report.** Tables and plots by horizon and condition; error-propagation case studies from the event logs.
+
+## Dev tuning log
+
+All H=5 dev runs: 10 scenarios x 2 conditions x 3 variants, one repeat, paired seeds.
+
+| Experiment | Change | Valid | Notes |
+| --- | --- | --- | --- |
+| `dev-avinash-v1` | budget 20 + 5H (45 calls) | 6/26 | 19 runs ran out of calls; prompts grew about 390 tokens per call. Led to the bounded context (rule 8). |
+| `dev-avinash-v2` | budget 20 + 8H (60 calls), bounded context | 21/60 | Of 39 invalid runs, 32 failed the agent's own check (plan never finished) and 7 were fooled by a false fact. Corrupted: standard 5 fooled + 3 unfinished, verification 1 + 7, recovery 1 + 8. Verification worked but spent 22-29 calls, mostly before the first check; 46% of its verifications were facts not in the final plan. Recovery removed items on ordinary conflicts (2 per clean run). The 4-day check (`dev-avinash-v2-long`, 180 calls) peaked at 20.4K prompt tokens but ended 24-36 violations short. |
+| `dev-avinash-v3` | build first, verify last; recovery repairs only proven-false facts; item conflicts on add/move; back-and-forth notice | pending | Replayed on the v2 final plans, the new selection flags about 8 of about 20 facts per plan and covers all 10 false facts that broke a plan. A separate verification budget was rejected: it would give the verifying variants more calls than standard. |
 
 ## Open items
 
