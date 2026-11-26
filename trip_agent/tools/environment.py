@@ -3,6 +3,9 @@
 Search tools return facts filtered through the scenario's corruption plan; verify_fact is the
 only tool that reads the trusted value. Every tool call, including verification and checking,
 consumes one unit of the shared tool-call budget.
+
+add_item and move_item also report what the agent's own check finds wrong with that item right
+away (believed facts only), so fixing a schedule does not need a check_itinerary call per move.
 """
 
 from __future__ import annotations
@@ -217,6 +220,7 @@ class TripEnvironment:
         self.unresolved: list[str] = []
         self.last_check = None
         self._seen_calls: dict[str, int] = {}
+        self._placements: dict[str, dict[tuple[int, int], int]] = {}  # item id -> (day, start) -> first step
 
     # ------------------------------------------------------------------ dispatch
     def call(self, name: str, arguments: dict | None) -> dict:
@@ -329,6 +333,18 @@ class TripEnvironment:
         if item.meal_type:
             out["meal_type"] = item.meal_type.value
         return out
+
+    def _conflicts(self, item_id: str, limit: int = 4) -> list[str]:
+        """What the agent's own check finds wrong with this item now, using believed facts only."""
+        report = check_itinerary(self.state.itinerary(), self.scenario, self.catalog, self.state.belief())
+        return [f"{v.name}: {v.message}" for v in report.violations if item_id in v.item_ids][:limit]
+
+    def _placed(self, item: ItineraryItem) -> int | None:
+        """Remember where an item has been; return the step it was first placed here, if it was."""
+        seen = self._placements.setdefault(item.id, {})
+        earlier = seen.get((item.day, item.start))
+        seen.setdefault((item.day, item.start), self.step)
+        return earlier
 
     def _record(self, action: str, item: ItineraryItem | None = None, depends_on=(), **extra) -> None:
         deps = list(depends_on)
@@ -450,7 +466,12 @@ class TripEnvironment:
         )
         self.state.items[item.id] = item
         self._record("add", item)
-        return {"added": self._item_view(item), "depends_on_facts": self.state.history[-1].depends_on}
+        self._placed(item)
+        return {
+            "added": self._item_view(item),
+            "depends_on_facts": self.state.history[-1].depends_on,
+            "conflicts": self._conflicts(item.id),
+        }
 
     def _tool_remove_item(self, item_id):
         item = self.state.items.pop(str(item_id), None)
@@ -473,7 +494,14 @@ class TripEnvironment:
         )
         self.state.items[item.id] = updated
         self._record("move", updated)
-        return {"moved": self._item_view(updated)}
+        result = {"moved": self._item_view(updated), "conflicts": self._conflicts(item.id)}
+        earlier = self._placed(updated)
+        if earlier is not None and (updated.day, updated.start) != (item.day, item.start):
+            result["repeat_notice"] = (
+                f"{item.id} was already at this time (step {earlier}). Moving items back and forth will not fix "
+                "this: reorder the day or choose another place."
+            )
+        return result
 
     def _tool_check_itinerary(self):
         report = check_itinerary(self.state.itinerary(), self.scenario, self.catalog, self.state.belief())

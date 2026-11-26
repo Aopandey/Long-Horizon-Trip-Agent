@@ -5,11 +5,12 @@ from conftest import reference_script
 
 from trip_agent.agent.llm.scripted import ScriptedClient, call
 from trip_agent.agent.loop import EpisodeLimits, run_episode
-from trip_agent.agent.policies import PolicySettings, RecoveryPolicy, make_policy
+from trip_agent.agent.policies import PolicySettings, RecoveryPolicy, make_policy, risky_facts
 from trip_agent.agent.prompts import system_prompt
 from trip_agent.checker.consistency import TruthView, check_itinerary
 from trip_agent.corruption.corrupt import CorruptionPlan, clean_plan
-from trip_agent.env.models import parse_clock
+from trip_agent.env.models import format_clock, parse_clock
+from trip_agent.state import dependency_graph
 from trip_agent.tools.environment import TripEnvironment
 
 LIE = {"a_art_museum.close_time": parse_clock("19:00")}
@@ -107,16 +108,70 @@ def test_max_turns(catalog, monday):
     assert result.stop_reason == "max_turns" and result.turns == 4
 
 
-def test_verification_flags_tight_unverified_facts(catalog, monday):
+def _reference_plan(env, scenario):
+    """Rebuild the reference itinerary with every lookup its check needs; returns the check result."""
+    ref = scenario.reference_itinerary
+    env.call("search_places", {"place_ids": [ref.hotel_id] + [i.place_id for i in ref.items]})
+    env.call("set_hotel", {"hotel_id": ref.hotel_id})
+    for item in ref.items:
+        args = {"day": item.day, "place_id": item.place_id, "start": format_clock(item.start)}
+        if item.meal_type:
+            args["meal_type"] = item.meal_type.value
+        env.call("add_item", args)
+    stops = [ref.hotel_id] + [i.place_id for i in sorted(ref.items, key=lambda i: i.start)] + [ref.hotel_id]
+    for a, b in zip(stops, stops[1:], strict=False):
+        env.call("get_travel_time", {"from_id": a, "to_id": b})
+    return env.call("check_itinerary", {})
+
+
+def test_verification_stays_quiet_while_building(catalog, monday):
     env = _env(catalog, monday, LIE)
     policy = make_policy("verification")
-    env.call("set_hotel", {"hotel_id": "h_copley"})
-    env.call("search_places", {"place_ids": ["a_art_museum"]})
-    result = env.call(
-        "add_item", {"day": 0, "place_id": "a_art_museum", "start": "16:00"}
-    )  # believed end 18:00 vs 19:00
-    note = policy.after_tool(env, "add_item", {}, result)
-    assert note and "a_art_museum.close_time" in note
+    for tool, args in [
+        ("set_hotel", {"hotel_id": "h_copley"}),
+        ("search_places", {"place_ids": ["a_art_museum"]}),
+        ("add_item", {"day": 0, "place_id": "a_art_museum", "start": "16:00"}),  # believed end 18:00 vs 19:00
+        ("move_item", {"item_id": "c1", "start": "16:30"}),
+        ("check_itinerary", {}),  # not valid yet: nothing to verify
+    ]:
+        assert policy.after_tool(env, tool, args, env.call(tool, args)) is None
+
+
+def test_verification_lists_risky_facts_once_the_plan_passes(catalog, monday):
+    env = _env(catalog, monday, LIE)
+    policy = make_policy("verification")
+    check = _reference_plan(env, monday)
+    assert check["valid"]
+    note = policy.after_tool(env, "check_itinerary", {}, check)
+    assert note.startswith("[planner] The plan passes")
+    risky = policy.risky(env)
+    assert [f.score for f in risky] == sorted(f.score for f in risky) and all(f.score < 1 for f in risky)
+    assert risky[0].key in note
+    # Only facts the plan relies on, and fewer than all of them.
+    deps = set(dependency_graph(env.state.itinerary(), catalog)) | {f"{env.state.hotel_id}.price_per_night"}
+    assert {f.key for f in risky} <= deps and len(risky) < len(deps)
+    # A verified fact leaves the list; once everything risky is verified the planner says so.
+    env.call("verify_fact", {"fact_key": risky[0].key})
+    assert risky[0].key not in {f.key for f in policy.risky(env)}
+    for fact in policy.risky(env):
+        env.call("verify_fact", {"fact_key": fact.key})
+    assert "Finish" in policy.after_tool(env, "check_itinerary", {}, env.call("check_itinerary", {}))
+
+
+def test_risky_facts_follow_the_margins(catalog, monday):
+    env = _env(catalog, monday, LIE)
+    _reference_plan(env, monday)
+    state = env.state
+
+    def keys(**settings):
+        found = risky_facts(state.itinerary(), monday, catalog, state.belief(), set(), PolicySettings(**settings))
+        return {f.key for f in found}
+
+    default = keys()
+    assert "h_copley.price_per_night" in default  # the largest cost goes first when the budget is tight
+    assert not {k for k in keys(price_error_fraction=0.0) if "price" in k}
+    assert not {k for k in keys(hours_slack_minutes=1) if k.endswith(("open_time", "close_time"))}
+    assert keys(hours_slack_minutes=600, travel_slack_minutes=600) >= default
 
 
 def _schedule_late_museum(env):
@@ -145,16 +200,28 @@ def test_recovery_caps_repairs_per_conflict(catalog, monday):
     policy = RecoveryPolicy(PolicySettings(max_repairs_per_conflict=3))
     env.call("set_hotel", {"hotel_id": "h_copley"})
     env.call("search_places", {"place_ids": ["a_art_museum"]})
-    env.call("verify_fact", {"fact_key": "a_art_museum.close_time"})
     notes = []
-    for _ in range(4):  # keep re-adding the museum too late; each failed check is one repair attempt
+    for _ in range(4):  # keep re-adding the museum too late and re-verifying the hours it relies on
         env.call("add_item", {"day": 0, "place_id": "a_art_museum", "start": "16:00"})
-        result = env.call("check_itinerary", {})
-        notes.append(policy.after_tool(env, "check_itinerary", {}, result) or "")
+        result = env.call("verify_fact", {"fact_key": "a_art_museum.close_time"})
+        notes.append(policy.after_tool(env, "verify_fact", {}, result) or "")
     assert sum("Repair" in n for n in notes) == 3
     assert "still unresolved" in notes[3]
     policy.finalize(env)
-    assert "check:opening_hours:a_art_museum" in env.unresolved
+    assert "fact:a_art_museum.close_time" in env.unresolved
+
+
+def test_recovery_leaves_ordinary_conflicts_to_the_model(catalog, monday):
+    env = TripEnvironment(catalog, monday, clean_plan(monday.id), 60)
+    policy = RecoveryPolicy()
+    env.call("set_hotel", {"hotel_id": "h_copley"})
+    env.call("search_places", {"place_ids": ["a_art_museum"]})
+    museum = env.call("add_item", {"day": 0, "place_id": "a_art_museum", "start": "16:00"})["added"]["item_id"]
+    result = env.call("check_itinerary", {})  # the museum closes at 17:00: a scheduling mistake, no false fact
+    assert not result["valid"]
+    assert policy.after_tool(env, "check_itinerary", {}, result) is None
+    assert museum in env.state.items
+    assert not [e for e in env.events if e["type"] == "repair"]
 
 
 def test_standard_policy_adds_nothing(catalog, monday):

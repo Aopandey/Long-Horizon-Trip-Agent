@@ -9,7 +9,9 @@ repeats: 3
 seed: 0
 corruption: {rate: 0.2, seed: 0}
 budget: {base: 20, per_commitment: 5}
-policy: {hours_slack_minutes: 120, travel_slack_minutes: 20, budget_slack_fraction: 0.3, max_repairs_per_conflict: 3}
+policy:
+  {hours_slack_minutes: 120, travel_slack_minutes: 20, travel_error_ratio: 1.0, price_error_fraction: 0.6,
+   max_repairs_per_conflict: 3}
 llm: {model: qwen3.5:9b, temperature: 0.6, num_ctx: 32768, num_predict: 2048, think: false}
 max_turns: 200
 concurrency: 1

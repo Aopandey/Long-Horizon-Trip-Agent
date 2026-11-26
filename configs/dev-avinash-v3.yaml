@@ -1,0 +1,32 @@
+# Dev tuning, third pilot. Same scenarios, seeds and budget as dev-avinash-v2, so the two pair up.
+# Changes from v2 (code, see docs/PLAN.md "Dev tuning log"):
+#   verification: build first, verify last. Nothing is flagged while building; once the plan passes
+#     its own check, the planner lists the risky facts it relies on, riskiest first;
+#   recovery: removes items only when verify_fact proves a search result wrong, not on ordinary
+#     scheduling conflicts;
+#   all variants: add_item/move_item report the item's conflicts right away, a notice fires when an
+#     item is moved back to a time it already had, and the prompt says to reorder instead of shifting.
+# Data from Supabase, results saved to Supabase. 60 runs (10 scenarios x 2 conditions x 3 variants).
+name: dev-avinash-v3
+split: dev
+horizons: [5]
+variants: [standard, verification, recovery]
+conditions: [clean, corrupted]
+repeats: 1
+corruption: {rate: 0.2, seed: 0}
+budget: {base: 20, per_commitment: 8}
+policy:
+  hours_slack_minutes: 120     # flag opening hours with less margin than this
+  travel_slack_minutes: 20     # flag travel legs with less spare time than max(this, ratio x minutes)
+  travel_error_ratio: 1.0
+  price_error_fraction: 0.6    # flag the largest prices until the rest being 60% too low still fits the budget
+  max_repairs_per_conflict: 3
+llm:
+  model: qwen3.5:9b
+  temperature: 0.6
+  num_ctx: 32768
+  think: false
+history_window: 6
+max_turns: 200
+concurrency: 1
+storage: {backend: supabase, dataset: main}
